@@ -1,0 +1,53 @@
+examples:
+  - id: slice-by-guides
+    title:
+      zh: 按参考线切分详情长图
+      en: Slice a long detail image at PSD guides
+    description:
+      zh: 已有 PSD/PSB 和导出的整张长图，按参考线切成编号分片
+      en: You have a PSD/PSB plus an exported flat long image and want numbered slices at the guide positions
+    prompt:
+      zh: |-
+        请按参考线把详情长图切片：
+
+        PSD/PSB 文件：{{PSD/PSB 路径}}
+        长图文件：{{长图 PNG/JPG 路径}}
+        输出目录：{{可选，默认为长图同目录下的 切片/}}
+      en: |-
+        Please slice the long detail image at the guides:
+
+        PSD/PSB file: {{path to PSD/PSB}}
+        Long image: {{path to flat PNG/JPG}}
+        Output dir: {{optional, defaults to a "slices" folder next to the long image}}
+  - id: slice-psd-only
+    title:
+      zh: 只给 PSD 直接切片
+      en: Slice from the PSD alone
+    description:
+      zh: 画布不超过 30000 像素时，只给 PSD/PSB 也能切（自动读合成图）
+      en: When the canvas is within 30000px, the PSD/PSB alone is enough (merged image is read automatically)
+    prompt:
+      zh: |-
+        这个详情图不超过 3 万像素，请按里面的参考线直接切片：
+
+        PSD/PSB 文件：{{PSD/PSB 路径}}
+      en: |-
+        This detail image is within 30000px; slice it directly at its guides:
+
+        PSD/PSB file: {{path to PSD/PSB}}
+  - id: slice-equal-height
+    title:
+      zh: 无参考线时按固定高度等分
+      en: Equal-height fallback without guides
+    description:
+      zh: 文件里没有参考线（或只有扁平长图）时按固定高度等分切图
+      en: When the file has no guides (or only a flat long image exists), cut at a fixed slice height
+    prompt:
+      zh: |-
+        这张长图没有参考线，请按每片 {{高度，如 1500}} 像素等分切片：
+
+        长图文件：{{长图 PNG/JPG 路径}}
+      en: |-
+        This long image has no guides; slice it every {{height, e.g. 1500}} px:
+
+        Long image: {{path to flat PNG/JPG}}
