@@ -37,6 +37,9 @@ def main():
         rl = ci.get("replyList") or []
         if rl:
             reply = rl[0].get("content", "")
+        ac = ci.get("afterComment") or {}
+        after = (ac.get("commentData") or ac.get("content") or ac.get("commentText") or "").strip()
+        after_date = (ac.get("commentDate") or ac.get("date") or "")[:10]
         data.append({
             "rid": rid, "nick": ci.get("userNickName", ""),
             "date": (ci.get("commentDate") or "")[:10], "fullDate": ci.get("commentDate", ""),
@@ -47,6 +50,7 @@ def main():
             "kw": [k.strip() for k in an["keywords"].split(",") if k.strip()],
             "imgs": ["media/" + f for f in man.get("images", [])],
             "vids": videos, "praise": ci.get("praiseCnt", "0"), "reply": reply,
+            "after": after, "afterDate": after_date,
             "id": ci.get("commentId", ""),
         })
 

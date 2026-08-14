@@ -123,6 +123,8 @@ select.ctl:focus{border-color:var(--ink)}
 .ktag:hover{border-color:var(--ink);color:var(--ink)}
 .ktag.negtag{color:var(--neg);border-color:var(--neg-line);background:var(--neg-bg)}
 .ktag.on{background:var(--ink);color:var(--paper);border-style:solid;border-color:var(--ink)}
+.after{margin-top:12px;background:var(--mix-bg);border-left:3px solid var(--mix-line);padding:10px 14px;font-size:13px;color:#6b4a12;border-radius:0 4px 4px 0}
+.after b{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--mix);display:block;margin-bottom:3px}
 .media{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
 .thumb{width:150px;height:150px;object-fit:cover;border-radius:4px;border:1px solid var(--line);cursor:zoom-in;transition:.25s;background:var(--paper2)}
 .thumb:hover{transform:scale(1.03);box-shadow:0 10px 24px -12px rgba(33,29,22,.4)}
@@ -301,6 +303,7 @@ function cardHTML(d,i){
     </div>
     <p class="ctext">${hl(d.text)}</p>
     <div class="ktags">${d.kw.map(k=>`<span class="ktag ${NEGKW.has(k)?'negtag':''} ${state.kws.has(k)?'on':''}" data-kw="${esc(k)}">${hl(k)}</span>`).join("")}</div>
+    ${d.after?`<div class="after"><b>追评${d.afterDate?` · ${esc(d.afterDate)}`:''}</b>${hl(d.after)}</div>`:''}
     ${media?`<div class="media">${media}</div>`:''}
   </article>`;
 }
