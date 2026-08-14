@@ -1,0 +1,41 @@
+examples:
+  - id: collect-default
+    title:
+      zh: 采集京东评论（默认50条带图视频）
+      en: Collect JD reviews (default 50 with media)
+    description:
+      zh: 给出京东商品链接，按默认规则采集带图/视频评论并生成口碑报告
+      en: Given a JD product link, collect media-rich reviews under default rules and build the insight report
+    prompt:
+      zh: |-
+        帮我采集这个京东商品的带图/视频评论（默认 50 条），下载图片和视频，做情感分类和关键词分析，生成 HTML 报告：
+        {{京东商品链接}}
+      en: |-
+        Collect the image/video reviews (default 50) of this JD product, download images and videos, run sentiment and keyword analysis, and generate the HTML report:
+        {{JD product URL}}
+  - id: collect-custom-count
+    title:
+      zh: 指定条数采集京东评论
+      en: Collect JD reviews with custom count
+    description:
+      zh: 需要更多或更少样本时，指定采集条数
+      en: Specify the number of reviews when you need more or fewer samples
+    prompt:
+      zh: |-
+        采集这个京东链接的带图/视频评论 {{条数，如 100}} 条，下载媒体并生成评论洞察报告：
+        {{京东商品链接}}
+      en: |-
+        Collect {{count, e.g. 100}} image/video reviews from this JD link, download the media and generate the review insight report:
+        {{JD product URL}}
+  - id: rebuild-report
+    title:
+      zh: 用已有采集数据重生成报告
+      en: Rebuild report from existing crawl data
+    description:
+      zh: 工作目录里已有 reviews_all.json 等数据时，直接重新生成 HTML 报告
+      en: When the workdir already contains reviews_all.json etc., regenerate the HTML report directly
+    prompt:
+      zh: |-
+        用 {{工作目录路径}} 里已采集的评论数据重新生成京东评论洞察 HTML 报告，商品ID {{productId}}，商品名 {{商品名}}
+      en: |-
+        Regenerate the JD review insight HTML report from the collected data in {{workdir path}}, product ID {{productId}}, product name {{product name}}

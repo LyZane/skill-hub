@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>京东评论洞察 · __PTITLE__</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f2ea; --paper2:#efe8db; --card:#fbf8f2;
+  --ink:#211d16; --ink-soft:#6f675a; --ink-faint:#9a917f;
+  --line:#ddd3c1; --line-soft:#e8e0d1;
+  --accent:#d4482e; --accent-deep:#a83620;
+  --pos:#2f7d5a; --pos-bg:#e5efe7; --pos-line:#bcd9c8;
+  --neg:#bf3b2b; --neg-bg:#f7e7e3; --neg-line:#e8c3ba;
+  --neu:#7d766a; --neu-bg:#ece7dc; --neu-line:#d6cebe;
+  --mix:#a8721c; --mix-bg:#f6ecda; --mix-line:#e3cfa4;
+  --serif:"Fraunces",Georgia,"Songti SC",serif;
+  --mono:"IBM Plex Mono","SF Mono",Menlo,monospace;
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Source Han Sans SC",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .035 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:1060px;margin:0 auto;padding:0 28px}
+::selection{background:#f2c9be;color:var(--ink)}
+
+/* masthead */
+.mast{padding:54px 0 30px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.32em;color:var(--accent);text-transform:uppercase;display:flex;align-items:center;gap:14px}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
+.mast h1{font-size:44px;font-weight:800;letter-spacing:.02em;margin:18px 0 6px;line-height:1.25}
+.mast h1 .serif{font-family:var(--serif);font-weight:500;font-style:italic;color:var(--accent)}
+.mast .sub{color:var(--ink-soft);font-size:14px;max-width:680px}
+.mast .sub a{color:var(--ink-soft)}
+.stats{display:flex;margin-top:30px;border:1px solid var(--ink);background:var(--card)}
+.stat{flex:1;padding:18px 22px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:none}
+.stat .n{font-family:var(--serif);font-size:44px;font-weight:700;line-height:1;display:flex;align-items:baseline;gap:6px}
+.stat .n small{font-size:14px;font-family:var(--sans);font-weight:400;color:var(--ink-soft)}
+.stat .l{font-family:var(--mono);font-size:11px;color:var(--ink-soft);letter-spacing:.14em;margin-top:8px}
+.stat.hot .n{color:var(--accent)}
+
+/* insight */
+.insight{display:grid;grid-template-columns:1.15fr .85fr;border:1px solid var(--ink);border-top:none;background:var(--card)}
+.ins-box{padding:24px 26px}
+.ins-box+.ins-box{border-left:1px solid var(--line)}
+.ins-h{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--ink-soft);margin-bottom:16px;display:flex;justify-content:space-between;gap:10px}
+.sbar{display:flex;height:34px;border:1px solid var(--ink);overflow:hidden}
+.sbar div{display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600;white-space:nowrap}
+.sbar .p{background:var(--pos)} .sbar .m{background:#c98a2b} .sbar .n{background:var(--neu)} .sbar .g{background:var(--neg)}
+.slegend{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:14px;font-size:12.5px;color:var(--ink-soft)}
+.slegend b{color:var(--ink);font-weight:600}
+.dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:0}
+.kws{display:flex;flex-wrap:wrap;gap:8px}
+.kw{font-size:13px;padding:5px 11px;border:1px solid var(--line);border-radius:3px;background:var(--paper);display:inline-flex;gap:7px;align-items:center;transition:.18s;cursor:pointer;user-select:none}
+.kw:hover{border-color:var(--ink);transform:translateY(-1px)}
+.kw i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+.kw.neg{border-color:var(--neg-line);background:var(--neg-bg);color:var(--neg)}
+.kw.neg i{color:var(--neg)}
+.kw.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.kw.on i{color:var(--paper)}
+.pain{margin-top:18px;border-left:3px solid var(--neg);background:var(--neg-bg);padding:12px 16px;font-size:13px;color:#7c2d20;border-radius:0 4px 4px 0}
+.pain b{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--neg);display:block;margin-bottom:4px}
+
+/* toolbar */
+.toolbar{position:sticky;top:0;z-index:50;background:rgba(246,242,234,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 0;margin-top:34px}
+.tb-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tb-row+.tb-row{margin-top:10px}
+.sep{width:1px;height:18px;background:var(--line);margin:0 6px}
+.tlabel{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--ink-faint)}
+.chip{font-size:13px;padding:6px 14px;border:1px solid var(--line);border-radius:99px;background:var(--card);cursor:pointer;transition:.18s;color:var(--ink-soft);user-select:none;display:inline-flex;gap:6px;align-items:center}
+.chip b{font-family:var(--mono);font-size:11px;font-weight:500;opacity:.75}
+.chip:hover{border-color:var(--ink);color:var(--ink)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.chip.c-pos.on{background:var(--pos);border-color:var(--pos)}
+.chip.c-mix.on{background:#b3791d;border-color:#b3791d}
+.chip.c-neu.on{background:var(--neu);border-color:var(--neu)}
+.chip.c-neg.on{background:var(--neg);border-color:var(--neg)}
+.chip.c-star.on{background:#b98a2e;border-color:#b98a2e}
+.chip.c-vid.on{background:var(--accent);border-color:var(--accent)}
+select.ctl{font-family:var(--sans);font-size:13px;padding:7px 10px;border:1px solid var(--line);border-radius:99px;background:var(--card);color:var(--ink-soft);outline:none;cursor:pointer;max-width:230px}
+select.ctl:focus{border-color:var(--ink)}
+.kwbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;min-height:28px}
+.kwtag{font-size:12px;background:var(--ink);color:var(--paper);border-radius:3px;padding:3px 8px;display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+.kwtag:hover{background:var(--accent)}
+.kwhint{font-size:12px;color:var(--ink-faint)}
+.tb-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.count-note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint)}
+.search{position:relative}
+.search input{font-family:var(--sans);font-size:13px;padding:7px 12px 7px 32px;border:1px solid var(--line);border-radius:99px;background:var(--card);width:190px;outline:none;transition:.2s;color:var(--ink)}
+.search input:focus{border-color:var(--ink);width:240px}
+.search::before{content:"⌕";position:absolute;left:12px;top:50%;transform:translateY(-52%);color:var(--ink-faint);font-size:15px}
+
+/* cards */
+.list{padding:26px 0 60px;display:flex;flex-direction:column;gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:22px 26px;transition:transform .25s,box-shadow .25s,border-color .25s;animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+.card:hover{transform:translateY(-2px);box-shadow:0 14px 34px -18px rgba(33,29,22,.35);border-color:#c9bda5}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.card.neg-card{border-left:3px solid var(--neg)}
+.card.mix-card{border-left:3px solid #c98a2b}
+.chead{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.rid{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.1em}
+.nick{font-weight:700;font-size:14.5px}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--paper2);border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink-soft);font-weight:600}
+.stars{color:#d8a13a;font-size:13px;letter-spacing:2px}
+.stars .off{color:var(--line)}
+.sbadge{font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:3px;margin-left:auto}
+.sbadge.pos{background:var(--pos-bg);color:var(--pos);border:1px solid var(--pos-line)}
+.sbadge.neg{background:var(--neg-bg);color:var(--neg);border:1px solid var(--neg-line)}
+.sbadge.neu{background:var(--neu-bg);color:var(--neu);border:1px solid var(--neu-line)}
+.sbadge.mix{background:var(--mix-bg);color:var(--mix);border:1px solid var(--mix-line)}
+.meta{font-family:var(--mono);font-size:11px;color:var(--ink-faint);display:flex;gap:14px;flex-wrap:wrap;width:100%;margin-top:2px}
+.meta .spec{color:var(--ink-soft);background:var(--paper2);padding:1px 8px;border-radius:3px}
+.ctext{margin-top:14px;font-size:15px;line-height:1.85;color:#2d2820}
+.ctext mark{background:#f5d9a8;padding:0 2px;border-radius:2px}
+.ktags{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
+.ktag{font-size:12px;color:var(--ink-soft);background:var(--paper);border:1px dashed var(--line);padding:2.5px 9px;border-radius:3px;cursor:pointer;transition:.15s}
+.ktag:hover{border-color:var(--ink);color:var(--ink)}
+.ktag.negtag{color:var(--neg);border-color:var(--neg-line);background:var(--neg-bg)}
+.ktag.on{background:var(--ink);color:var(--paper);border-style:solid;border-color:var(--ink)}
+.media{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.thumb{width:150px;height:150px;object-fit:cover;border-radius:4px;border:1px solid var(--line);cursor:zoom-in;transition:.25s;background:var(--paper2)}
+.thumb:hover{transform:scale(1.03);box-shadow:0 10px 24px -12px rgba(33,29,22,.4)}
+.vidwrap{position:relative;width:150px}
+.vidwrap video{width:150px;height:150px;object-fit:cover;border-radius:4px;border:1px solid var(--line);background:#000;cursor:pointer}
+.vidlen{position:absolute;right:6px;bottom:6px;background:rgba(20,18,14,.72);color:#fff;font-family:var(--mono);font-size:10px;padding:1px 6px;border-radius:3px;pointer-events:none}
+.reply{margin-top:14px;background:var(--paper2);border-left:3px solid var(--line);padding:10px 14px;font-size:13px;color:var(--ink-soft);border-radius:0 4px 4px 0}
+.reply b{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-faint);display:block;margin-bottom:3px}
+.cfoot{margin-top:14px;display:flex;align-items:center;gap:16px;font-family:var(--mono);font-size:11px;color:var(--ink-faint);border-top:1px dashed var(--line-soft);padding-top:10px;flex-wrap:wrap}
+.like{display:inline-flex;gap:5px;align-items:center}
+.like svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.6}
+.idchip{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:3px;padding:2px 8px;cursor:pointer;transition:.15s;background:var(--paper)}
+.idchip:hover{border-color:var(--ink);color:var(--ink)}
+.idchip.ok{border-color:var(--pos);color:var(--pos);background:var(--pos-bg)}
+
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(22,19,14,.94);z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column}
+.lb.open{display:flex;animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.lb img{max-width:88vw;max-height:80vh;object-fit:contain;border-radius:3px;box-shadow:0 30px 80px -20px rgba(0,0,0,.7)}
+.lb-cap{color:#cfc7b8;font-family:var(--mono);font-size:12px;margin-top:16px;letter-spacing:.06em;text-align:center;max-width:80vw}
+.lb-x{position:absolute;top:22px;right:30px;color:#fff;font-size:30px;cursor:pointer;line-height:1;opacity:.8}
+.lb-x:hover{opacity:1}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:40px;cursor:pointer;padding:20px;opacity:.55;user-select:none;font-family:var(--serif)}
+.lb-nav:hover{opacity:1}
+.lb-prev{left:14px}.lb-next{right:14px}
+.lb-cnt{position:absolute;top:26px;left:32px;color:#cfc7b8;font-family:var(--mono);font-size:12px}
+
+footer{border-top:1px solid var(--line);padding:26px 0 44px;font-size:12px;color:var(--ink-faint);font-family:var(--mono);letter-spacing:.04em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.empty{text-align:center;color:var(--ink-faint);padding:60px 0;font-size:14px;display:none}
+@media(max-width:860px){
+  .insight{grid-template-columns:1fr}
+  .ins-box+.ins-box{border-left:none;border-top:1px solid var(--line)}
+  .stats{flex-wrap:wrap}.stat{flex:1 1 45%;border-bottom:1px solid var(--line)}
+  .mast h1{font-size:30px}
+  .tb-right{margin-left:0;width:100%}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="mast">
+    <div class="eyebrow">JD Review Dossier · __DATE__</div>
+    <h1>__HTITLE__</h1>
+    <p class="sub">商品：__PNAME__<br>
+    SKU ID __PID__ · 采集自「图/视频」评论筛选 · <a href="https://item.jd.com/__PID__.html" target="_blank">查看商品页 ↗</a></p>
+    <div class="stats">
+      <div class="stat hot"><div class="n">__N_REV__<small>条</small></div><div class="l">带图/视频评论</div></div>
+      <div class="stat"><div class="n">__N_IMG__<small>张</small></div><div class="l">买家实拍图片</div></div>
+      <div class="stat"><div class="n">__N_VID__<small>个</small></div><div class="l">买家实拍视频</div></div>
+      <div class="stat"><div class="n">__POS_RATE__<small>%</small></div><div class="l">正面情感占比</div></div>
+    </div>
+  </header>
+
+  <section class="insight">
+    <div class="ins-box">
+      <div class="ins-h"><span>情感光谱 SENTIMENT</span><span>n=__N_REV__</span></div>
+      <div class="sbar" id="sbar"></div>
+      <div class="slegend" id="slegend"></div>
+      <div class="pain"><b>VOICE OF CONCERN · 值得关注的吐槽</b>__PAIN_TEXT__</div>
+    </div>
+    <div class="ins-box">
+      <div class="ins-h"><span>高频关键词 TOP __N_KW__</span><span>点击多选筛选 · 红框=吐槽点</span></div>
+      <div class="kws" id="kws"></div>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <div class="tb-row">
+      <span class="tlabel">情感</span>
+      <span class="chip on" data-sent="all">全部 <b>__N_REV__</b></span>
+      <span class="chip c-pos" data-sent="正面">正面 <b>__S_POS__</b></span>
+      <span class="chip c-mix" data-sent="有褒有贬">有褒有贬 <b>__S_MIX__</b></span>
+      <span class="chip c-neu" data-sent="中性">中性 <b>__S_NEU__</b></span>
+      <span class="chip c-neg" data-sent="负面">负面 <b>__S_NEG__</b></span>
+      <span class="sep"></span>
+      <span class="tlabel">评分</span>
+      <span class="chip c-star on" data-score="all">全部</span>
+      <span id="scoreChips" style="display:contents"></span>
+      <span class="sep"></span>
+      <span class="chip c-vid" data-vid="1">含视频 <b>__N_VID__</b></span>
+    </div>
+    <div class="tb-row">
+      <span class="tlabel">SKU</span>
+      <select class="ctl" id="skuSel"></select>
+      <span class="sep"></span>
+      <span class="tlabel">关键词</span>
+      <div class="kwbar" id="kwbar"><span class="kwhint">未选（点击上方关键词芯片，可多选叠加）</span></div>
+      <div class="tb-right">
+        <span class="count-note" id="cnt"></span>
+        <div class="search"><input id="q" type="text" placeholder="搜评论 / 关键词 / 昵称 / ID"></div>
+        <select class="ctl" id="sort">
+          <option value="default">采集顺序</option>
+          <option value="praise">按点赞数</option>
+          <option value="date">按时间最新</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <main class="list" id="list"></main>
+  <div class="empty" id="empty">没有匹配的评论，换个筛选条件试试</div>
+
+  <footer>
+    <span>采集时间 __COLLECT_TS__ · 来源 京东评论浮层 getCommentListPage</span>
+    <span>媒体文件位于同目录 media/ 文件夹</span>
+  </footer>
+</div>
+
+<div class="lb" id="lb">
+  <span class="lb-cnt" id="lbcnt"></span>
+  <span class="lb-x" id="lbx">×</span>
+  <span class="lb-nav lb-prev" id="lbp">‹</span>
+  <img id="lbimg" src="">
+  <span class="lb-nav lb-next" id="lbn">›</span>
+  <div class="lb-cap" id="lbcap"></div>
+</div>
+
+<script>
+const DATA = __DATA__;
+const TOPKW = __KW__;
+const SENT = __SENT__;
+const NEGKW = new Set(TOPKW.filter(k=>k.neg).map(k=>k.k));
+const esc = s => String(s??"").replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* overview: sentiment bar + keyword chips (multi-select filters) */
+(function(){
+  const order=[["正面","p"],["有褒有贬","m"],["中性","n"],["负面","g"]];
+  const total=DATA.length;
+  document.getElementById("sbar").innerHTML = order.filter(([k])=>SENT[k]).map(([k,c])=>
+    `<div class="${c}" style="flex-grow:${SENT[k]}" title="${k} ${SENT[k]}条">${SENT[k]>1?SENT[k]:''}</div>`).join("");
+  document.getElementById("slegend").innerHTML = order.map(([k,c])=>{
+    const col={p:"var(--pos)",m:"#c98a2b",n:"var(--neu)",g:"var(--neg)"}[c];
+    return `<span><span class="dot" style="background:${col}"></span>${k} <b>${SENT[k]}</b> 条 · ${(SENT[k]/total*100).toFixed(1)}%</span>`;
+  }).join("");
+  document.getElementById("kws").innerHTML = TOPKW.map(k=>
+    `<span class="kw ${k.neg?'neg':''}" data-kw="${esc(k.k)}">${esc(k.k)}<i>×${k.n}</i></span>`).join("");
+  /* score chips */
+  const sc={}; DATA.forEach(d=>{sc[d.score]=(sc[d.score]||0)+1;});
+  document.getElementById("scoreChips").innerHTML = Object.keys(sc).sort((a,b)=>b-a).map(s=>
+    `<span class="chip c-star" data-score="${esc(s)}">${esc(s)} 星 <b>${sc[s]}</b></span>`).join("");
+  /* sku select */
+  const sk={}; DATA.forEach(d=>{const v=d.spec||"(无SKU)"; sk[v]=(sk[v]||0)+1;});
+  document.getElementById("skuSel").innerHTML = `<option value="all">全部 SKU（${total}）</option>` +
+    Object.entries(sk).sort((a,b)=>b[1]-a[1]).map(([v,n])=>`<option value="${esc(v)}">${esc(v)}（${n}）</option>`).join("");
+})();
+
+const state={sent:"all",score:"all",sku:"all",kws:new Set(),vid:false,q:"",sort:"default"};
+const list=document.getElementById("list");
+
+function stars(n){n=parseInt(n)||0;let s="";for(let i=1;i<=5;i++)s+=`<span class="${i<=n?'':'off'}">★</span>`;return `<span class="stars">${s}</span>`;}
+const sentCls={"正面":"pos","负面":"neg","中性":"neu","有褒有贬":"mix"};
+
+function cardHTML(d,i){
+  const hl = txt => {
+    let t=esc(txt);
+    if(state.q){ const re=new RegExp(state.q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),"gi"); t=t.replace(re,m=>`<mark>${m}</mark>`); }
+    return t;
+  };
+  const media=[
+    ...d.imgs.map(u=>`<img class="thumb" loading="lazy" src="${u}" data-full="${u}" data-cap="${d.rid} · ${d.nick} · ${d.date}">`),
+    ...d.vids.map(v=>`<div class="vidwrap"><video controls preload="none" poster="${v.cover}" src="${v.src}"></video><span class="vidlen">${v.len}s</span></div>`)
+  ].join("");
+  return `<article class="card ${d.sent==='负面'?'neg-card':d.sent==='有褒有贬'?'mix-card':''}" style="animation-delay:${Math.min(i*45,500)}ms">
+    <div class="chead">
+      <span class="avatar">${esc(d.nick[0]||'J')}</span>
+      <span class="nick">${esc(d.nick)}</span>
+      ${stars(d.score)}
+      <span class="sbadge ${sentCls[d.sent]}">${d.sent}</span>
+      <div class="meta">
+        <span class="rid">${d.rid}</span><span>${d.fullDate}</span>
+        ${d.spec?`<span class="spec">${esc(d.spec)}</span>`:''}
+      </div>
+    </div>
+    <p class="ctext">${hl(d.text)}</p>
+    <div class="ktags">${d.kw.map(k=>`<span class="ktag ${NEGKW.has(k)?'negtag':''} ${state.kws.has(k)?'on':''}" data-kw="${esc(k)}">${hl(k)}</span>`).join("")}</div>
+    ${media?`<div class="media">${media}</div>`:''}
+    ${d.reply?`<div class="reply"><b>商家回复</b>${hl(d.reply)}</div>`:''}
+    <div class="cfoot">
+      <span class="like"><svg viewBox="0 0 24 24"><path d="M7 10v12H4a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1h3zm3 12h9.2a2 2 0 0 0 2-1.6l1.4-7A2 2 0 0 0 20.6 11H14l.9-4.1A2 2 0 0 0 13 4.4L10 10"/></svg>${d.praise} 人觉得有用</span>
+      <span class="idchip" data-id="${esc(d.id)}" title="点击复制唯一ID">ID ${esc(d.id)} ⧉</span>
+    </div>
+  </article>`;
+}
+
+function visible(){
+  let arr=DATA.filter(d=>{
+    if(state.vid && !d.vids.length) return false;
+    if(state.sent!=="all" && d.sent!==state.sent) return false;
+    if(state.score!=="all" && String(d.score)!==state.score) return false;
+    if(state.sku!=="all" && (d.spec||"(无SKU)")!==state.sku) return false;
+    if(state.kws.size){ let hit=false; for(const k of state.kws){ if(d.kw.includes(k)){hit=true;break;} } if(!hit) return false; }
+    return true;
+  });
+  if(state.q){
+    const q=state.q.toLowerCase();
+    arr=arr.filter(d=>(d.text+d.kw.join(" ")+d.nick+d.spec+d.reply+d.id).toLowerCase().includes(q));
+  }
+  if(state.sort==="praise") arr=[...arr].sort((a,b)=>(+b.praise)-(+a.praise));
+  if(state.sort==="date") arr=[...arr].sort((a,b)=>b.fullDate.localeCompare(a.fullDate));
+  return arr;
+}
+function renderKwbar(){
+  const bar=document.getElementById("kwbar");
+  bar.innerHTML = state.kws.size
+    ? [...state.kws].map(k=>`<span class="kwtag" data-kw="${esc(k)}">${esc(k)} ×</span>`).join("") + `<span class="kwhint">含任一所选关键词 · 点标签移除</span>`
+    : `<span class="kwhint">未选（点击上方关键词芯片，可多选）</span>`;
+}
+function render(){
+  const arr=visible();
+  list.innerHTML=arr.map(cardHTML).join("");
+  document.getElementById("empty").style.display=arr.length?"none":"block";
+  document.getElementById("cnt").textContent=`显示 ${arr.length} / ${DATA.length} 条`;
+  renderKwbar();
+}
+function toggleKw(k){
+  if(state.kws.has(k)) state.kws.delete(k); else state.kws.add(k);
+  document.querySelectorAll(`#kws .kw`).forEach(el=>el.classList.toggle("on", state.kws.has(el.dataset.kw)));
+  render();
+}
+document.addEventListener("click",e=>{
+  const kwChip=e.target.closest("#kws .kw"); if(kwChip){ toggleKw(kwChip.dataset.kw); return; }
+  const ktag=e.target.closest(".ktag"); if(ktag){ toggleKw(ktag.dataset.kw); return; }
+  const kwtag2=e.target.closest(".kwtag"); if(kwtag2){ toggleKw(kwtag2.dataset.kw); return; }
+  const sent=e.target.closest("[data-sent]"); if(sent){
+    document.querySelectorAll("[data-sent]").forEach(c=>c.classList.remove("on"));
+    sent.classList.add("on"); state.sent=sent.dataset.sent; render(); return;
+  }
+  const sc=e.target.closest("[data-score]"); if(sc){
+    document.querySelectorAll("[data-score]").forEach(c=>c.classList.remove("on"));
+    sc.classList.add("on"); state.score=sc.dataset.score; render(); return;
+  }
+  const vd=e.target.closest("[data-vid]"); if(vd){
+    state.vid=!state.vid; vd.classList.toggle("on",state.vid); render(); return;
+  }
+  const idc=e.target.closest(".idchip"); if(idc){ copyId(idc); return; }
+});
+document.getElementById("skuSel").addEventListener("change",e=>{state.sku=e.target.value;render();});
+document.getElementById("q").addEventListener("input",e=>{state.q=e.target.value.trim();render();});
+document.getElementById("sort").addEventListener("change",e=>{state.sort=e.target.value;render();});
+
+function copyId(el){
+  const id=el.dataset.id;
+  const done=()=>{el.classList.add("ok");const t=el.innerHTML;el.innerHTML="已复制 ✓";setTimeout(()=>{el.innerHTML=t;el.classList.remove("ok");},1200);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(id).then(done).catch(()=>fallback()); }
+  else fallback();
+  function fallback(){ const ta=document.createElement("textarea");ta.value=id;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");}catch(e){}ta.remove();done(); }
+}
+
+/* lightbox */
+const lb=document.getElementById("lb"),lbimg=document.getElementById("lbimg");
+let gallery=[],gi=0;
+function openLB(i){gi=i;const g=gallery[gi];lbimg.src=g.src;document.getElementById("lbcap").textContent=g.cap;
+  document.getElementById("lbcnt").textContent=(gi+1)+" / "+gallery.length;lb.classList.add("open");document.body.style.overflow="hidden";}
+function closeLB(){lb.classList.remove("open");document.body.style.overflow="";}
+function step(d){if(!gallery.length)return;gi=(gi+d+gallery.length)%gallery.length;openLB(gi);}
+list.addEventListener("click",e=>{
+  const t=e.target.closest(".thumb"); if(!t)return;
+  gallery=[...list.querySelectorAll(".thumb")].map(x=>({src:x.dataset.full,cap:x.dataset.cap}));
+  openLB([...list.querySelectorAll(".thumb")].indexOf(t));
+});
+document.getElementById("lbx").onclick=closeLB;
+document.getElementById("lbp").onclick=()=>step(-1);
+document.getElementById("lbn").onclick=()=>step(1);
+lb.addEventListener("click",e=>{if(e.target===lb)closeLB();});
+document.addEventListener("keydown",e=>{
+  if(!lb.classList.contains("open"))return;
+  if(e.key==="Escape")closeLB(); if(e.key==="ArrowLeft")step(-1); if(e.key==="ArrowRight")step(1);
+});
+
+render();
+</script>
+</body>
+</html>
