@@ -115,6 +115,7 @@ select.ctl:focus{border-color:var(--ink)}
 .sbadge.mix{background:var(--mix-bg);color:var(--mix);border:1px solid var(--mix-line)}
 .meta{font-family:var(--mono);font-size:11px;color:var(--ink-faint);display:flex;gap:14px;flex-wrap:wrap;width:100%;margin-top:2px}
 .meta .spec{color:var(--ink-soft);background:var(--paper2);padding:1px 8px;border-radius:3px}
+.meta-right{margin-left:auto;display:inline-flex;gap:12px;align-items:center}
 .ctext{margin-top:14px;font-size:15px;line-height:1.85;color:#2d2820}
 .ctext mark{background:#f5d9a8;padding:0 2px;border-radius:2px}
 .ktags{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
@@ -128,9 +129,6 @@ select.ctl:focus{border-color:var(--ink)}
 .vidwrap{position:relative;width:150px}
 .vidwrap video{width:150px;height:150px;object-fit:cover;border-radius:4px;border:1px solid var(--line);background:#000;cursor:pointer}
 .vidlen{position:absolute;right:6px;bottom:6px;background:rgba(20,18,14,.72);color:#fff;font-family:var(--mono);font-size:10px;padding:1px 6px;border-radius:3px;pointer-events:none}
-.reply{margin-top:14px;background:var(--paper2);border-left:3px solid var(--line);padding:10px 14px;font-size:13px;color:var(--ink-soft);border-radius:0 4px 4px 0}
-.reply b{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-faint);display:block;margin-bottom:3px}
-.cfoot{margin-top:14px;display:flex;align-items:center;gap:16px;font-family:var(--mono);font-size:11px;color:var(--ink-faint);border-top:1px dashed var(--line-soft);padding-top:10px;flex-wrap:wrap}
 .like{display:inline-flex;gap:5px;align-items:center}
 .like svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.6}
 .idchip{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:3px;padding:2px 8px;cursor:pointer;transition:.15s;background:var(--paper)}
@@ -295,16 +293,15 @@ function cardHTML(d,i){
       <div class="meta">
         <span class="rid">${d.rid}</span><span>${d.fullDate}</span>
         ${d.spec?`<span class="spec">${esc(d.spec)}</span>`:''}
+        <span class="meta-right">
+          <span class="like"><svg viewBox="0 0 24 24"><path d="M7 10v12H4a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1h3zm3 12h9.2a2 2 0 0 0 2-1.6l1.4-7A2 2 0 0 0 20.6 11H14l.9-4.1A2 2 0 0 0 13 4.4L10 10"/></svg>${d.praise} 人觉得有用</span>
+          <span class="idchip" data-id="${esc(d.id)}" title="点击复制唯一ID">ID ${esc(d.id)} ⧉</span>
+        </span>
       </div>
     </div>
     <p class="ctext">${hl(d.text)}</p>
     <div class="ktags">${d.kw.map(k=>`<span class="ktag ${NEGKW.has(k)?'negtag':''} ${state.kws.has(k)?'on':''}" data-kw="${esc(k)}">${hl(k)}</span>`).join("")}</div>
     ${media?`<div class="media">${media}</div>`:''}
-    ${d.reply?`<div class="reply"><b>商家回复</b>${hl(d.reply)}</div>`:''}
-    <div class="cfoot">
-      <span class="like"><svg viewBox="0 0 24 24"><path d="M7 10v12H4a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1h3zm3 12h9.2a2 2 0 0 0 2-1.6l1.4-7A2 2 0 0 0 20.6 11H14l.9-4.1A2 2 0 0 0 13 4.4L10 10"/></svg>${d.praise} 人觉得有用</span>
-      <span class="idchip" data-id="${esc(d.id)}" title="点击复制唯一ID">ID ${esc(d.id)} ⧉</span>
-    </div>
   </article>`;
 }
 
