@@ -1,0 +1,51 @@
+examples:
+  - id: regenerate-report
+    title:
+      zh: 重新生成商品总览报告
+      en: Regenerate the product overview report
+    description:
+      zh: 已有采集数据时，直接重新生成带链接校验的 HTML 总览
+      en: Regenerate the HTML overview with link validation from existing collected data
+    prompt:
+      zh: |-
+        用 tmall-store-report 技能重新生成天猫商品数据总览：
+
+        数据目录：{{tmall_data 目录路径}}
+        输出文件：{{输出 HTML 路径}}
+
+        剔除运费/配件类商品，按累计销量排序，并校验全部主图链接是否 404。
+      en: |-
+        Use the tmall-store-report skill to regenerate the Tmall product overview:
+
+        Data dir: {{path to tmall_data}}
+        Output: {{output HTML path}}
+
+        Exclude shipping/accessory items, sort by cumulative sales, and validate all main-image links for 404s.
+  - id: collect-and-build
+    title:
+      zh: 全量采集并生成总览
+      en: Collect everything and build the overview
+    description:
+      zh: 从卖家后台与详情页模拟点击采集销量、评论、问大家后生成报告
+      en: Collect sales, reviews and Ask-Everyone via simulated clicks, then build the report
+    prompt:
+      zh: |-
+        用 tmall-store-report 技能采集我天猫后台出售中商品的销售、评论（含图）和问大家数据，并生成 HTML 总览。
+
+        输出文件：{{输出 HTML 路径}}
+      en: |-
+        Use the tmall-store-report skill to collect sales, reviews (with images) and Ask-Everyone data for my on-sale Tmall products, then build the HTML overview.
+
+        Output: {{output HTML path}}
+  - id: check-image-links
+    title:
+      zh: 检查商品主图链接
+      en: Check product main-image links
+    description:
+      zh: 校验 products.json 中主图 URL 是否可访问，列出 404
+      en: Validate main-image URLs in products.json and list 404s
+    prompt:
+      zh: |-
+        用 tmall-store-report 技能的 build_report.py 检查 {{tmall_data 目录路径}} 里商品主图链接基础是否做好，列出所有 404 的主图并修复后重新生成报告。
+      en: |-
+        Use the tmall-store-report skill's build_report.py to check whether the main-image links in {{path to tmall_data}} are healthy; list every 404 image, fix them, and regenerate the report.
