@@ -1,6 +1,6 @@
 ---
 name: yadu-series-banner
-description: 亚都（YADU）商城加湿器系列套图生成器。用户只需说「做加湿器系列套图」「出系列图」「做模块头图」「做热区切图背景」等，即触发导购式问询流程：先做选择题补齐参数（图类型、比例、场景），再输出三个系列（无雾加湿器、超声波落地款、超声波桌面款）的全套 AI 绘图提示词与标题/副标题。支持两种图类型：模块头图（左文右图、白色标题）与多热区切图背景（上展下承、承载商品图）。三系列以青绿/藏青/暖棕三色系区分，共享统一构图与质感，保证一套图。
+description: 亚都（YADU）商城加湿器系列套图生成器。用户只需说「做加湿器系列套图」「出系列图」「做模块头图」「做热区切图背景」等，即触发导购式问询流程：先做选择题补齐参数（图类型、比例、场景），再输出三个系列（无雾加湿器、超声波落地款、超声波桌面款）的全套 AI 绘图提示词与标题/副标题。支持两种图类型：模块头图（左文右图、白色标题）与多热区切图背景（上展下承、承载商品图，左上角留低明度文字安全区）。三系列以青绿/石墨灰/暖棕三色系区分，共享统一构图与质感，保证一套图。
 ---
 
 # 亚都商城 · 加湿器系列套图生成器
@@ -49,15 +49,15 @@ description: 亚都（YADU）商城加湿器系列套图生成器。用户只需
 ### 骨架 B · 多热区切图背景
 
 ```
-电商店铺模块背景图，[比例] 竖版构图，画面中不出现任何产品、人物、文字、水印、logo。画面仅上方约四分之一区域有场景内容：[场景句]，[情绪词]的[色系]调。下方约四分之三区域为[浅色承载色]纯净渐变承载底色，低对比度、无视觉焦点、无杂物、无明暗强烈变化，均匀耐看，用于后期叠加商品图。整体色调：[色系]渐变至[浅色承载色]。商业摄影质感，柔光，细腻平滑的渐变过渡，8K 超高清细节。
+电商店铺模块背景图，[比例] 竖版构图，画面中不出现任何产品、人物、文字、水印、logo。画面仅上方约四分之一区域有场景内容：[场景句]，[情绪词]的[色系]调；场景的视觉重心位于上方区域的右侧，左上角保持低明度纯净渐变、无视觉焦点、无高亮杂物，作为后期叠加白色文字的安全区。下方约四分之三区域为[浅色承载色]纯净渐变承载底色，低对比度、无视觉焦点、无杂物、无明暗强烈变化，均匀耐看，用于后期叠加商品图。整体色调：[色系]渐变至[浅色承载色]。商业摄影质感，柔光，细腻平滑的渐变过渡，8K 超高清细节。
 ```
 
-- 热区底图**不输出标题/副标题**（图上无文字）。
+- 热区底图文本后期叠加在**左上角**；输出时附带标题/副标题建议（供排版参考，图上不生成文字）。
 
 负面提示词（骨架 B）：
 
 ```
-产品实物，人物，文字，水印，logo，促销标签，画面中部或下部出现视觉焦点，强烈明暗对比，杂乱纹理，低清晰度，卡通风格
+产品实物，人物，文字，水印，logo，促销标签，画面中部或下部出现视觉焦点，左上角视觉焦点，左上角高亮，强烈明暗对比，杂乱纹理，低清晰度，卡通风格
 ```
 
 ## 插槽 2：比例
@@ -74,7 +74,7 @@ description: 亚都（YADU）商城加湿器系列套图生成器。用户只需
 | A2 | 主卧空调房 | 夜晚主卧一角，空调送出轻柔气流，柔软床品与纱帘，湿润洁净的空气感在暖微光中缓缓流动 |
 | A3 | 客厅午后 | 明亮通透的客厅午后，白色纱帘透光，洁净湿润的气流光带轻盈流动，窗台绿植叶片挂着晶莹水珠 |
 
-### 超声波落地款（藏青系）
+### 超声波落地款（石墨灰系）
 
 | 编号 | 场景 | 场景句 |
 |---|---|---|
@@ -100,16 +100,16 @@ description: 亚都（YADU）商城加湿器系列套图生成器。用户只需
 | 系列 | 系列深色 | 色系 | 浅色承载色（仅骨架 B） | 情绪词 | 标题（仅骨架 A） | 副标题（仅骨架 A） |
 |---|---|---|---|---|---|---|
 | 无雾加湿器 | 深青绿色 | 湖水青绿 + 雾白 + 浅木色 | 浅青白色 | 安心、洁净、治愈 | 看不见水雾 却更安心 | 冷蒸发无白粉 · 不挑水质 · 母婴与易敏家庭首选 |
-| 超声波落地款 | 深藏青蓝色 | 深藏青 + 雾白 + 浅木色 | 浅灰蓝白色 | 大气、通透、水润 | 看得见的大雾量 全屋水润一次到位 | 9L–20L 大容量 · UV-C 除菌 · 客厅到别墅全覆盖 |
+| 超声波落地款 | 深石墨灰色 | 高级石墨灰 + 雾白 + 浅木色 | 浅灰白色 | 大气、通透、水润 | 看得见的大雾量 全屋水润一次到位 | 9L–20L 大容量 · UV-C 除菌 · 客厅到别墅全覆盖 |
 | 超声波桌面款 | 深暖棕色 | 暖琥珀棕 + 雾白 + 淡青色微光 | 浅奶白暖色 | 静谧、温柔、陪伴 | 小空间 即开即润 | 3L–5L 小巧机身 · 28dB 轻音 · 香薰氛围灯 |
 
 ## 英文版骨架（用户要求 Midjourney / SD / Flux 时使用）
 
 ```
-E-commerce series banner, ultra-wide [比例], no products, no people, no text, no watermark, no logo. [场景句英译]. Left third: clean deep-[teal green / navy blue / warm amber brown] gradient background, dark enough for white text overlay, no pure white or bright areas on the left. Main subject on the right two-thirds. Palette: [色系英译]. Commercial photography, soft light, shallow depth of field, cinematic, 8K --ar [比例] --style raw
+E-commerce series banner, ultra-wide [比例], no products, no people, no text, no watermark, no logo. [场景句英译]. Left third: clean deep-[teal green / graphite gray / warm amber brown] gradient background, dark enough for white text overlay, no pure white or bright areas on the left. Main subject on the right two-thirds. Palette: [色系英译]. Commercial photography, soft light, shallow depth of field, cinematic, 8K --ar [比例] --style raw
 ```
 
-（骨架 B 英译同理：上方 1/4 场景 → "only the top quarter contains the scene"，下方承载区 → "bottom three-quarters: clean low-contrast [浅色] gradient base for product overlay, no focal points".）
+（骨架 B 英译同理：上方 1/4 场景 → "only the top quarter contains the scene"，左上角文字安全区 → "top-left corner stays a dark clean gradient with no focal point, reserved for white text overlay"，下方承载区 → "bottom three-quarters: clean low-contrast [浅色] gradient base for product overlay, no focal points".）
 
 ## 输出格式（固定）
 
@@ -120,7 +120,7 @@ E-commerce series banner, ultra-wide [比例], no products, no people, no text, 
 提示词：```...```
 （头图模式附）标题：... ｜ 副标题：...
 
-### 2️⃣ 超声波落地款（藏青系）
+### 2️⃣ 超声波落地款（石墨灰系）
 （同上）
 
 ### 3️⃣ 超声波桌面款（暖琥珀系）
@@ -133,6 +133,7 @@ E-commerce series banner, ultra-wide [比例], no products, no people, no text, 
 
 1. 白字可读性（骨架 A）：提示词已写死"左侧深色渐变 + 禁止高亮"。若出图左侧仍偏亮，补一句「将画面左侧 1/3 整体压暗为[系列深色]渐变」重新生成，或后期加 15–20% 黑色渐变蒙版。
 2. 承载区失控（骨架 B）：若 AI 在下方 3/4 放了杂物或强光影，补一句「画面下方四分之三保持纯净渐变，不出现任何物体」重新生成。
+3. 左上角失守（骨架 B）：若左上角出现视觉焦点或高亮，补一句「左上角保持低明度纯净渐变，不出现任何视觉焦点」重新生成；文字叠加前确认该处明度足够低。
 3. 一致性加成：三张图在同一轮对话连续生成，或使用相同 seed。
 4. 文案后期叠加：图中不含文字；头图标题/副标题后期排版，白色加粗黑体，副标题可加 1px 白色细分隔线。
 5. 尺寸备忘：1200:591 ≈ 2:1；工具只支持 16:9 时按 16:9 生成后上下裁约 12%。
