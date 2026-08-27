@@ -1,0 +1,57 @@
+examples:
+  - id: create-group-and-doc
+    title:
+      zh: 建分组并存入文档
+      en: Create Group and Add Document
+    description:
+      zh: 在指定知识库的某个分组下新建分组，并把一篇 Markdown 文章存进去
+      en: Create a subgroup under a given group in a Yuque book and store a markdown article in it
+    prompt:
+      zh: |-
+        请在语雀知识库 {{知识库 namespace，如 yourname/your-book}} 的「{{父分组名}}」下创建名为「{{新分组名}}」的分组，并将以下文章以 Markdown 文档存入该分组：
+
+        {{文章内容或本地文件路径}}
+      en: |-
+        In Yuque book {{book namespace, e.g. yourname/your-book}}, create a group named "{{new group}}" under "{{parent group}}", and save the following article into it as a markdown doc:
+
+        {{article content or local file path}}
+  - id: read-doc
+    title:
+      zh: 读取/总结语雀文档
+      en: Read or Summarize a Yuque Doc
+    description:
+      zh: 读取语雀文档全文或按要求总结、整理
+      en: Fetch the full content of a Yuque document, or summarize it as requested
+    prompt:
+      zh: |-
+        请读取这篇语雀文档并{{处理方式，如：总结要点 / 提取待办}}：
+
+        文档：{{语雀链接或 namespace/slug}}
+      en: |-
+        Please read this Yuque document and {{action, e.g. summarize key points / extract todos}}:
+
+        Doc: {{Yuque URL or namespace/slug}}
+  - id: search-yuque
+    title:
+      zh: 搜索语雀内容
+      en: Search Yuque Content
+    description:
+      zh: 在语雀中搜索文档或知识库
+      en: Search docs or repos in Yuque
+    prompt:
+      zh: |-
+        请在语雀中搜索与「{{关键词}}」相关的文档，并列出最相关的结果链接。
+      en: |-
+        Search Yuque for documents related to "{{keyword}}" and list the most relevant result links.
+  - id: manage-toc
+    title:
+      zh: 整理知识库目录
+      en: Organize Book TOC
+    description:
+      zh: 移动、重命名知识库目录中的分组或文档节点
+      en: Move or rename group/doc nodes in a Yuque book table of contents
+    prompt:
+      zh: |-
+        请整理语雀知识库 {{知识库 namespace}} 的目录：把「{{节点名}}」移动到「{{目标分组名}}」下。
+      en: |-
+        Organize the TOC of Yuque book {{book namespace}}: move "{{node title}}" under "{{target group}}".
