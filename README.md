@@ -1,6 +1,6 @@
 # skill-hub
 
-通用 Agent 技能仓库（客户端无关，千问办公 / Codex / Claude Code 等均可使用）。约定：一个技能一个文件夹，文件夹名 = 技能名，内含 `SKILL.md` 与配套 `scripts/`。
+通用 Agent 技能仓库（客户端无关，任意支持技能 / MCP 的 agent 客户端均可使用）。约定：一个技能一个文件夹，文件夹名 = 技能名，内含 `SKILL.md` 与配套 `scripts/`。
 
 本地技能目录（所用客户端的技能安装目录，如 `~/.qwenworkcn/skills/<name>/`、`~/.codex/skills/<name>/`、`~/.claude/skills/<name>/`）与仓库 `<name>/` 保持同步；改动后提交推送。
 
