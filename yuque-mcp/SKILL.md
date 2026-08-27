@@ -25,6 +25,8 @@ params={ name:"yuque", config:{ command:"npx", args:["-y","yuque-mcp@latest"],
 
 接入后工具名为 `mcp__yuque__yuque_*`。
 
+安装参考：官方仓库 https://github.com/yuque/yuque-mcp-server （npm 包 `yuque-mcp`，stdio 传输）。除上面的手动配置外，也可用官方安装命令 `npx yuque-mcp install --token=<token> --client=<客户端名>` 一键写入客户端配置；私有部署或空间绑定令牌可加环境变量 `YUQUE_HOST`（或 `--host`）。
+
 ## 工具速览
 
 - 用户/知识库：`yuque_get_user`、`yuque_list_books`、`yuque_get_book`、`yuque_create_book`、`yuque_update_book`
