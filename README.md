@@ -4,6 +4,11 @@
 
 本地技能目录（所用客户端的技能安装目录，如 `~/.qwenworkcn/skills/<name>/`、`~/.codex/skills/<name>/`、`~/.claude/skills/<name>/`）与仓库 `<name>/` 保持同步；改动后提交推送。
 
+## 维护约定（所有维护者含任意 agent 均须遵守）
+
+- **客户端解耦**：技能内容必须与具体 agent 客户端解耦。`SKILL.md`、metadata、scripts 中不得写入具体客户端名称及其专属工具名、配置键或私有路径，统一用通用能力表述（如"浏览器自动化""文件交付""在客户端的 MCP 配置中添加"）。确需说明客户端差异时，以通用格式（如 `mcpServers` JSON / stdio TOML）为准，各客户端差异只作为并列示例列举，不得把任一客户端当作默认环境。
+- **敏感信息禁入**：令牌、cookie、账号 ID、私有知识库 namespace 等一律以 `<占位符>` 书写，不得明文进入仓库。
+
 ## 技能列表
 - `yuque-sheet` — 解析语雀表格文档（lakesheet）为结构化数据，支持打印高清图片 / 导出 Excel / CSV / 数据分析。
 - `ecom-sku-collector` — 采集电商平台（天猫/淘宝、京东）商品 SKU 数据（名称/价格/库存/图片），支持已打开标签页 / 列表页 / URL 列表三种输入；下游输出 Excel（多 sheet、内嵌图片）/ CSV / 同店跨链接价格一致性核对 / 天猫 vs 京东跨平台比价。前身为 tmall-sku-collector，扩展京东采集后改名。
