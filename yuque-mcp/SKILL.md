@@ -7,7 +7,7 @@ description: 通过 yuque MCP 服务器操作语雀（知识库、目录分组�
 
 ## 接入配置
 
-QwenWork 自定义 MCP 名称建议为 `yuque`，启动方式 `npx -y yuque-mcp@latest`，环境变量 `YUQUE_TOKEN` 与 `YUQUE_PERSONAL_TOKEN`（同值）。
+MCP 服务器名称建议为 `yuque`，启动方式 `npx -y yuque-mcp`，环境变量 `YUQUE_TOKEN`。
 
 令牌获取与安全检查：
 
@@ -15,15 +15,21 @@ QwenWork 自定义 MCP 名称建议为 `yuque`，启动方式 `npx -y yuque-mcp@
 2. 严禁把令牌明文写进技能文件、文档或对话产物。
 3. 优先复用本机已有配置中的令牌（如 `~/.codex/config.toml`、`~/.claude/settings.json` 等编辑器 MCP 配置里的 yuque 段）；没有再向用户索取。
 
-若 MCP 未接入（工具列表搜 `yuque` 为空），通过 QwenWork 连接器添加：
+若当前客户端未接入该 MCP，在客户端的 MCP 配置中添加（JSON 示例，TOML 类客户端照此换算）：
 
-```
-qw_action: key=qwenwork.settings.connector.custom, action=add,
-params={ name:"yuque", config:{ command:"npx", args:["-y","yuque-mcp@latest"],
-  env:{ YUQUE_TOKEN:"<token>", YUQUE_PERSONAL_TOKEN:"<token>" } } }
+```json
+{
+  "mcpServers": {
+    "yuque": {
+      "command": "npx",
+      "args": ["-y", "yuque-mcp"],
+      "env": { "YUQUE_TOKEN": "<token>" }
+    }
+  }
+}
 ```
 
-接入后工具名为 `mcp__yuque__yuque_*`。
+接入后工具名以服务器名 `yuque` 为前缀（具体格式因客户端而异，如 `mcp__yuque__yuque_get_toc`）。
 
 安装参考：官方仓库 https://github.com/yuque/yuque-mcp-server （npm 包 `yuque-mcp`，stdio 传输）。除上面的手动配置外，也可用官方安装命令 `npx yuque-mcp install --token=<token> --client=<客户端名>` 一键写入客户端配置；私有部署或空间绑定令牌可加环境变量 `YUQUE_HOST`（或 `--host`）。
 

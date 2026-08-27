@@ -25,7 +25,7 @@ python3 scripts/slice_by_guides.py --psd <PSD/PSB路径> --image <长图路径> 
 
 3. 脚本内置校验：每个分片重新解码、尺寸核对、高度（宽度）合计等于原图、无重叠无遗漏；失败以非零退出。校验不通过不得向用户报告成功。
 4. 抽查 1–2 张分片目视确认边界落在版面自然分界处（用 Read 看图）。
-5. 用 qwenwork_file_present_files 把分片交付给用户。
+5. 把分片成果交付给用户（用所在客户端的文件交付/展示能力，如 present files / artifact 卡片）。
 
 ## 输出约定
 
