@@ -1,16 +1,25 @@
 ---
 name: ecom-sku-collector
-description: 采集电商平台商品 SKU 数据（名称/原价/实付价/库存/图片）：天猫/淘宝详情页、京东详情页，支持已打开标签页/列表页/URL 列表三种输入。下游支持 Excel（多 sheet 单工作簿、内嵌图片）/ CSV / 同店跨链接价格一致性核对 / 跨平台（天猫 vs 京东）比价分析。当用户要求采集商品价格、整理 SKU 价格表、核对各链接价格一致性、排查漏改价、竞对比价时使用。
-version: 1.0.0
+description: 采集电商平台商品 SKU 数据（名称/原价/实付价/库存/图片）：天猫/淘宝详情页、京东详情页，支持商家后台出售中列表（本店全店首选）/已打开标签页/列表页/URL 列表四种输入。下游支持 Excel（多 sheet 单工作簿、内嵌图片）/ CSV / 同店跨链接价格一致性核对 / 跨平台（天猫 vs 京东）比价分析。当用户要求采集商品价格、整理 SKU 价格表、核对各链接价格一致性、排查漏改价、竞对比价时使用。
+version: 1.1.0
 ---
 
 # 电商 SKU 采集与价格分析（天猫/京东）
 
+## 第 0 步：采集前自检（必做，不符即停）
+
+开始采集前确认三件事一致，任一不符**立即停止并询问用户**，不得自行猜测数据源继续：
+
+1. **浏览器**：WebBridge 当前连接的浏览器是否就是用户说的那个（同名扩展可能装在 Chrome/Canary/Edge 多个浏览器里，守护进程同一时刻只绑定一个扩展；用 `find_tab(active:true)` 借标签页，借到的是哪个浏览器的就是哪个）。连接不符时引导用户在目标浏览器启用扩展并重启浏览器，再重试。
+2. **账号与店铺**：借到的标签页/后台页显示的登录账号、店铺名是否就是用户口中的"本店"。买家账号的卖家后台出售中为 0 件——发现 0 件先怀疑接错浏览器/账号，而不是店铺真的没商品。
+3. **页面**：用户说"当前打开的是 X 页"时，先读取页面确认类型；实际不是 X 页时告知用户并确认真实入口，不要默默改用其他来源凑数。
+
 ## 核心流程：输入 → 平台路由 → 规范化 data.json
 
-**输入三种形态**：
+**输入四种形态**：
+- **B0 商家后台出售中列表（"本店/全店"首选，最快路径）**：直接 `navigate` 到 `https://myseller.taobao.com/home.htm/SellManage/on_sale/?current=1&pageSize=20`，从 `document.body.innerText` 用正则 `ID:(\d{6,})` 取商品 ID（同时可取标题），翻页改 `current` 参数直到取满（页头有"共N件商品x/y"）。**不要走店铺前台**（category.htm/search.htm 新版装修页渲染不稳定，反复刷新易触发风控变空页）。拿到 ID 列表后逐个打开详情页采集。
 - **A 已打开的详情标签页**：`tabs_context` 过滤 `item.htm?id=`（天猫/淘宝）或 `item.jd.com` 标签页，直接复用。
-- **B 列表页**（店铺全部宝贝/搜索结果/后台商品管理）：先滚动加载完毕，`javascript_tool` 执行 `scripts/extract_links.js` 全文取商品 URL 列表，再逐个打开（已有同 URL 标签页则复用，否则 `tabs_create_mcp` + `navigate`）。
+- **B 列表页**（店铺全部宝贝/搜索结果）：先滚动加载完毕，`javascript_tool` 执行 `scripts/extract_links.js` 全文取商品 URL 列表，再逐个打开（已有同 URL 标签页则复用，否则 `tabs_create_mcp` + `navigate`）。
 - **C 用户给的 URL 列表**：同 B 逐个打开。
 
 **平台路由**（按域名）：detail.tmall.com / item.taobao.com → 天猫适配器；item.jd.com → 京东适配器。同一批可混合采集，data.json 用 `platform` 字段区分。
@@ -68,6 +77,8 @@ version: 1.0.0
 - 京东价格口径不统一（到手价/补贴价/PLUS价），保留 priceTag 字段；补贴价可能无划线原价。京东价格受登录账号与收货地区影响，报告注明采集时点。
 - 京东规格选项里可能有「团购优选 咨询享优惠」类询价占位项，不是真实 SKU。
 - 天猫 skuId "0" 是整品默认行（起步价，可能带"起"字），跳过；多属性 propPath 形如 `pid:vid;pid:vid`。
+- **单规格商品（滤网/配件/运费补差链接等）`skuBase.skus` 为空数组**，价格库存挂在 `skuCore.sku2info["0"]` 上：采为一行 `skuId:"0", skuName:"默认规格（无多SKU）"`，image 留空。
+- **部分 SKU 行 `subPrice` 为空**（无促销时实付价=标价）：build_report.py 对 `promoPrice=None` 会抛 TypeError，聚合 data.json 时把空 promoPrice 回填为 listPrice。
 - 价格为采集时点页面快照，会随促销变动；Excel 内嵌图片浮于单元格上，排序/筛选后不随行。
 - 列表页取链接前务必滚动/翻页加载完；extract_links 返回 0 条时退回正则 `[?&]id=\d+` 扫页面文本。
 
