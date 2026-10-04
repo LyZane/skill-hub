@@ -1,38 +1,39 @@
 ---
 name: invoice-organizer
-description: "Organize invoice files in a supplied folder by expense purpose, rename using purpose, amount, and seller, remove confirmed duplicates, and write count and amount summaries. Use for recurring invoice preparation for finance."
+description: "整理指定目录中的发票，按费用用途、含税金额和销售方核心品牌重命名，删除确认重复项，并在对话中汇报数量与金额。适用于周期性发票归档和财务报销整理。"
 ---
 
-# Invoice organizer
+# 发票整理
 
-When the user provides a folder for invoice organization, prepare the files for finance and create `统计.txt` in that folder. Work only in the supplied folder and its descendants. Do not upload invoice contents to external services.
+用户提供发票目录时，整理其中的发票，并在最终对话中展示统计结果。不要创建或更新统计文件。仅处理用户指定目录及其子目录中的相关发票；不要将发票内容上传到外部服务。
 
-## Identify and classify
+## 识别与分类
 
-- Inspect supported documents and images using available local tools. Extract the invoice's expense purpose (for example, 打车、代驾、餐饮、机票), amount, and seller/company name. Purpose means the business expense category, not the formal invoice type.
-- Use the invoice's payable gross total (价税合计/含税总额) as the amount. Do not substitute tax-exclusive amount, unit price, invoice code, or invoice number.
-- Classify from the invoice's description and line items. Use concise Chinese purpose labels. Do not infer a purpose from the seller alone when the document does not support it. For unclear purpose or amount, leave the file unchanged and record it as unresolved.
-- Shorten the seller name by removing corporate suffixes such as 有限公司、股份有限公司、有限责任公司、集团有限公司. Preserve the distinctive name. Do not over-shorten distinct companies to the same label. If a reasonable company name cannot be identified, leave the file unchanged and record it as unresolved.
-- Rename successfully identified files to `用途类型-¥金额-公司简写.原扩展名`, with amount formatted to two decimal places, e.g. `餐饮-¥128.00-示例餐饮.pdf`. Keep the original extension. Sanitize filesystem-invalid filename characters without changing the meaning.
-- Never overwrite an existing file. If names collide, append a stable distinguishing value from the invoice (prefer invoice number; otherwise a short sequence suffix).
+- 从发票内容识别费用用途、含税总金额和销售方名称。“类型”指用途类别，例如打车、代驾、餐饮、机票、加油，不是发票的法定票种。
+- 金额采用价税合计或含税总额，不得用不含税金额、单价、发票代码或发票号码代替。
+- 根据发票项目名称、商品或服务明细判断用途。不能仅凭销售方名称猜测用途。用途、金额或销售方无法可靠识别时，不要猜测；保留原文件，并在对话统计中列出文件名和原因。
+- 公司简称优先使用销售方可识别的核心品牌。去掉组织形式、地区分支、销售公司字样、分公司和门店等非品牌部分，但保留品牌本身有辨识度的词。例如：
+  - “中国石化销售股份有限公司广东中山石油分公司”简写为“中国石化”；
+  - “中国石化销售股份有限公司广东深圳石油分公司”简写为“中国石化”；
+  - “广东广安冠德石化有限公司深圳上南加油站”简写为“冠德石化”。
+- 不要把不同品牌简写成同一名称；无法可靠判断核心品牌时，保留原文件并标记待确认。
+- 已识别文件命名为“用途类型-¥金额-公司简写.原扩展名”，金额保留两位小数，例如“餐饮-¥128.00-示例品牌.pdf”。保留原扩展名，清理文件系统不允许的字符。
+- 不得覆盖已有文件。同名时优先追加发票号码等稳定区分信息；无法取得时追加短序号。
 
-## Detect and remove duplicates
+## 去重
 
-- First compare file contents (cryptographic hash) to find exact copies.
-- Also identify duplicate invoices with matching invoice identifiers, or matching reliable invoice fields such as seller, invoice date, gross total, and line-item/details, even if scans, filenames, or file formats differ.
-- Delete only duplicates that are confidently established. Keep one best-quality/most complete copy; remove the other copies. A similar amount or seller alone is insufficient. If uncertain, preserve the files and report them for review.
-- Perform duplicate detection before renaming where practical. Do not treat an already-present `统计.txt` or unrelated files as invoices.
+- 优先计算文件内容哈希，找出完全相同的副本。
+- 对不同扫描件或格式的文件，核对发票代码和号码；没有可靠唯一编号时，综合比较销售方、开票日期、含税总额和明细。
+- 只有能可靠确认属于同一张发票时才删除重复件。保留清晰、完整的一份；仅金额或销售方相同不足以证明重复。
+- 无法确认的疑似重复项一律保留，并在对话中列出供复核。
+- 尽量在重命名前完成去重。不要将目录中已有的统计文件或无关文件当成发票。
 
-## Statistics and reporting
+## 对话统计与结果
 
-Write UTF-8 `统计.txt` to the supplied folder. Summarize retained, successfully identified invoices by expense purpose, including invoice count and total amount, then include an all-category total count and amount. Format each amount with `¥` and two decimal places. Example:
+不要在发票目录中创建或更新统计文件。最终直接在对话中按用途类型展示保留且成功识别的发票数量和金额，并给出全量合计。金额使用“¥”并保留两位小数。例如：
 
-```text
 餐饮：3 张，¥456.00
 打车：2 张，¥78.50
 合计：5 张，¥534.50
-```
 
-Do not include confirmed deleted duplicates in the totals. Add an unresolved section listing filenames and concise reasons for files that could not be identified safely. If duplicate candidates were preserved due to uncertainty, list them separately. Explain in the summary that totals cover retained, successfully identified invoices only. Ensure totals are calculated with decimal arithmetic, not binary floating point.
-
-After processing, report counts of renamed invoices, confirmed duplicates deleted, and unresolved files. Do not claim deletion or successful extraction unless it occurred.
+统计不包含已确认删除的重复件。说明统计口径仅覆盖去重后保留且成功识别的发票；另列待确认文件及原因，以及因重复关系不确定而保留的候选项。使用十进制定点数汇总金额，避免浮点误差。完成后在对话中报告重命名数量、确认并删除的重复件数量、待确认数量。只报告实际完成的操作。
