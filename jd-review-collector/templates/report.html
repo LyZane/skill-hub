@@ -192,34 +192,47 @@ footer{border-top:1px solid var(--line);padding:26px 0 44px;font-size:12px;color
 
   <div class="toolbar">
     <div class="tb-row">
-      <span class="tlabel">情感</span>
-      <span class="chip on" data-sent="all">全部 <b>__N_REV__</b></span>
-      <span class="chip c-pos" data-sent="正面">正面 <b>__S_POS__</b></span>
-      <span class="chip c-mix" data-sent="有褒有贬">有褒有贬 <b>__S_MIX__</b></span>
-      <span class="chip c-neu" data-sent="中性">中性 <b>__S_NEU__</b></span>
-      <span class="chip c-neg" data-sent="负面">负面 <b>__S_NEG__</b></span>
-      <span class="sep"></span>
-      <span class="tlabel">评分</span>
-      <span class="chip c-star on" data-score="all">全部</span>
-      <span id="scoreChips" style="display:contents"></span>
-      <span class="sep"></span>
-      <span class="chip c-vid" data-vid="1">含视频 <b>__N_VID__</b></span>
+      <span class="fgroup">
+        <span class="tlabel">情感</span>
+        <span class="chip on" data-sent="all">全部 <b>__N_REV__</b></span>
+        <span class="chip c-pos" data-sent="正面">正面 <b>__S_POS__</b></span>
+        <span class="chip c-mix" data-sent="有褒有贬">有褒有贬 <b>__S_MIX__</b></span>
+        <span class="chip c-neu" data-sent="中性">中性 <b>__S_NEU__</b></span>
+        <span class="chip c-neg" data-sent="负面">负面 <b>__S_NEG__</b></span>
+      </span>
+      <span class="fgroup" id="stateGroup">
+        <span class="tlabel">状态</span>
+      </span>
     </div>
     <div class="tb-row">
-      <span class="tlabel">SKU</span>
-      <select class="ctl" id="skuSel"></select>
-      <span class="sep"></span>
-      <span class="tlabel">关键词</span>
-      <div class="kwbar" id="kwbar"><span class="kwhint">未选（点击上方关键词芯片，可多选叠加）</span></div>
-      <div class="tb-right">
-        <span class="count-note" id="cnt"></span>
-        <div class="search"><input id="q" type="text" placeholder="搜评论 / 关键词 / 昵称 / ID"></div>
+      <span class="fgroup">
+        <span class="tlabel">评分</span>
+        <span class="chip c-star on" data-score="all">全部</span>
+        <span id="scoreChips" style="display:contents"></span>
+      </span>
+      <span class="fgroup">
+        <span class="chip c-vid" data-vid="1">含视频 <b>__N_VID__</b></span>
+      </span>
+      <span class="fgroup">
+        <span class="tlabel">SKU</span>
+        <select class="ctl" id="skuSel"></select>
+      </span>
+      <span class="fgroup">
+        <span class="tlabel">排序</span>
         <select class="ctl" id="sort">
           <option value="default">采集顺序</option>
           <option value="praise">按点赞数</option>
           <option value="date">按时间最新</option>
         </select>
+      </span>
+      <div class="tb-right">
+        <span class="count-note" id="cnt"></span>
+        <div class="search"><input id="q" type="text" placeholder="搜评论 / 关键词 / 昵称 / ID"></div>
       </div>
+    </div>
+    <div class="tb-row">
+      <span class="tlabel">关键词</span>
+      <div class="kwbar" id="kwbar"><span class="kwhint">未选（点击上方关键词芯片，可多选叠加）</span></div>
     </div>
   </div>
 
