@@ -13,28 +13,28 @@
 ## 技能列表
 
 ### 电商 · 数据采集
-| 英文名 | 中文名 | 说明 |
-|---|---|---|
-| `tmall-review-report` | 天猫评价采集报告 | 采集天猫店铺商品的评价（含图片/追评/商家回复）与问大家数据，生成主图导航的交互式 HTML 口碑总览，自动校验主图链接有效性、过滤非实物商品。 |
-| `tmall-price-checker` | 天猫价格核对 | 采集天猫/淘宝商品 SKU 价格（原价/实付价/库存/图片），输出 Excel/CSV，核心是同店跨链接价格一致性核对、排查漏改价。 |
-| `jd-review-collector` | 京东评论采集分析 | 采集京东商品页带图/视频买家评论（默认50条、反人机验证策略），逐条情感分类+关键词提炼，产出交互式 HTML 洞察报告。 |
+| 图标 | 英文名 | 中文名 | 说明 |
+|---|---|---|---|
+| <img src="tmall-review-report/icon.svg" width="28"> | `tmall-review-report` | 天猫评价采集报告 | 采集天猫店铺商品的评价（含图片/追评/商家回复）与问大家数据，生成主图导航的交互式 HTML 口碑总览，自动校验主图链接有效性、过滤非实物商品。 |
+| <img src="tmall-price-checker/icon.svg" width="28"> | `tmall-price-checker` | 天猫价格核对 | 采集天猫/淘宝商品 SKU 价格（原价/实付价/库存/图片），输出 Excel/CSV，核心是同店跨链接价格一致性核对、排查漏改价。 |
+| <img src="jd-review-collector/icon.svg" width="28"> | `jd-review-collector` | 京东评论采集分析 | 采集京东商品页带图/视频买家评论（默认50条、反人机验证策略），逐条情感分类+关键词提炼，产出交互式 HTML 洞察报告。 |
 
 ### 电商 · 经营报表
-| 英文名 | 中文名 | 说明 |
-|---|---|---|
-| `tmall-sales-to-warehouse-reconciliation` | 天猫销售仓库对账 | 清洗天猫订单商家编码、分离补单，生成全量/真实/补单/退货订单与统计五个工作表，按物流与退款口径核对仓库出库、退货和净销量。 |
-| `tmall-monthly-business-report` | 天猫月度经营报表 | 生成天猫店铺月度经营报告 Excel：订单拆分四表，按商家编码统计销量/营业额/成本/利润/毛利率，汇总平台费用与推广费，全公式化财报输出。 |
+| 图标 | 英文名 | 中文名 | 说明 |
+|---|---|---|---|
+| <img src="tmall-sales-to-warehouse-reconciliation/icon.svg" width="28"> | `tmall-sales-to-warehouse-reconciliation` | 天猫销售仓库对账 | 清洗天猫订单商家编码、分离补单，生成全量/真实/补单/退货订单与统计五个工作表，按物流与退款口径核对仓库出库、退货和净销量。 |
+| <img src="tmall-monthly-business-report/icon.svg" width="28"> | `tmall-monthly-business-report` | 天猫月度经营报表 | 生成天猫店铺月度经营报告 Excel：订单拆分四表，按商家编码统计销量/营业额/成本/利润/毛利率，汇总平台费用与推广费，全公式化财报输出。 |
 
 ### 语雀
-| 英文名 | 中文名 | 说明 |
-|---|---|---|
-| `yuque-sheet` | 语雀表格解析 | 解析语雀表格文档（lakesheet）为结构化数据，支持打印高清图片 / 导出 Excel / CSV / 数据分析。 |
-| `yuque-mcp` | 语雀 MCP 操作 | 通过 yuque MCP 服务器操作语雀（知识库 / 目录分组 / 文档 / 小记 / 搜索）：含接入配置、"建分组 + 存文档"标准流程与 429 限流诊断。 |
+| 图标 | 英文名 | 中文名 | 说明 |
+|---|---|---|---|
+| <img src="yuque-sheet/icon.svg" width="28"> | `yuque-sheet` | 语雀表格解析 | 解析语雀表格文档（lakesheet）为结构化数据，支持打印高清图片 / 导出 Excel / CSV / 数据分析。 |
+| <img src="yuque-mcp/icon.svg" width="28"> | `yuque-mcp` | 语雀 MCP 操作 | 通过 yuque MCP 服务器操作语雀（知识库 / 目录分组 / 文档 / 小记 / 搜索）：含接入配置、"建分组 + 存文档"标准流程与 429 限流诊断。 |
 
 ### 办公工具
-| 英文名 | 中文名 | 说明 |
-|---|---|---|
-| `invoice-organizer` | 发票整理 | 按费用用途、含税金额和销售方核心品牌整理发票，删除确认重复项，并展示按用途分类的数量与金额统计。 |
-| `picture-slicer` | 图片切割器 | 把超长图片（如电商详情长图）裁成编号分片：可按 PSD/PSB 参考线精确切分（不受 PS 画布像素限制），无参考线时按固定高度等分，自动校验完整性。 |
+| 图标 | 英文名 | 中文名 | 说明 |
+|---|---|---|---|
+| <img src="invoice-organizer/icon.svg" width="28"> | `invoice-organizer` | 发票整理 | 按费用用途、含税金额和销售方核心品牌整理发票，删除确认重复项，并展示按用途分类的数量与金额统计。 |
+| <img src="picture-slicer/icon.svg" width="28"> | `picture-slicer` | 图片切割器 | 把超长图片（如电商详情长图）裁成编号分片：可按 PSD/PSB 参考线精确切分（不受 PS 画布像素限制），无参考线时按固定高度等分，自动校验完整性。 |
 
 各技能目录下的 `EXAMPLES.md` 提供典型场景的示例提示词，复制后替换占位符即可发给 agent 使用。
