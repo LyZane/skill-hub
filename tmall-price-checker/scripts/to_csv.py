@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""data.json 展平为 CSV 明细（兼容天猫/京东统一 schema）。
+"""data.json 展平为 CSV 明细（天猫统一 schema）。
 用法: python3 to_csv.py <data.json> <out.csv>"""
 import json, csv, sys
 

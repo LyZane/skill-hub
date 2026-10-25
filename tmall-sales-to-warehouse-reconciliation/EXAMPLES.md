@@ -1,6 +1,6 @@
-# warehouse-order-reconcile 示例提示词
+# tmall-sales-to-warehouse-reconciliation 示例提示词
 
-复制下面任一场景的提示词发给 agent，替换 `<尖括号>` 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 warehouse-order-reconcile 技能：」即可显式指定。
+复制下面任一场景的提示词发给 agent，替换 `<尖括号>` 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 tmall-sales-to-warehouse-reconciliation 技能：」即可显式指定。
 
 ## 场景 1｜订单清洗 + 剔除补单（最常用）
 

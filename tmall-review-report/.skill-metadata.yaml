@@ -8,14 +8,14 @@ examples:
       en: Regenerate the HTML overview with link validation from existing collected data
     prompt:
       zh: |-
-        用 tmall-store-report 技能重新生成天猫商品数据总览：
+        用 tmall-review-report 技能重新生成天猫商品数据总览：
 
         数据目录：{{tmall_data 目录路径}}
         输出文件：{{输出 HTML 路径}}
 
         剔除运费/配件类商品，按累计销量排序，并校验全部主图链接是否 404。
       en: |-
-        Use the tmall-store-report skill to regenerate the Tmall product overview:
+        Use the tmall-review-report skill to regenerate the Tmall product overview:
 
         Data dir: {{path to tmall_data}}
         Output: {{output HTML path}}
@@ -30,11 +30,11 @@ examples:
       en: Collect sales, reviews and Ask-Everyone via simulated clicks, then build the report
     prompt:
       zh: |-
-        用 tmall-store-report 技能采集我天猫后台出售中商品的销售、评论（含图）和问大家数据，并生成 HTML 总览。
+        用 tmall-review-report 技能采集我天猫后台出售中商品的销售、评论（含图）和问大家数据，并生成 HTML 总览。
 
         输出文件：{{输出 HTML 路径}}
       en: |-
-        Use the tmall-store-report skill to collect sales, reviews (with images) and Ask-Everyone data for my on-sale Tmall products, then build the HTML overview.
+        Use the tmall-review-report skill to collect sales, reviews (with images) and Ask-Everyone data for my on-sale Tmall products, then build the HTML overview.
 
         Output: {{output HTML path}}
   - id: check-image-links
@@ -46,6 +46,6 @@ examples:
       en: Validate main-image URLs in products.json and list 404s
     prompt:
       zh: |-
-        用 tmall-store-report 技能的 build_report.py 检查 {{tmall_data 目录路径}} 里商品主图链接基础是否做好，列出所有 404 的主图并修复后重新生成报告。
+        用 tmall-review-report 技能的 build_report.py 检查 {{tmall_data 目录路径}} 里商品主图链接是否有效，列出所有 404 的主图并修复后重新生成报告。
       en: |-
-        Use the tmall-store-report skill's build_report.py to check whether the main-image links in {{path to tmall_data}} are healthy; list every 404 image, fix them, and regenerate the report.
+        Use the tmall-review-report skill's build_report.py to check whether the main-image links in {{path to tmall_data}} are healthy; list every 404 image, fix them, and regenerate the report.

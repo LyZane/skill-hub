@@ -1,6 +1,6 @@
-# monthly-business-report 示例提示词
+# tmall-monthly-business-report 示例提示词
 
-复制下面任一场景的提示词发给 agent，替换 `<尖括号>` 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 monthly-business-report 技能：」即可显式指定。
+复制下面任一场景的提示词发给 agent，替换 `<尖括号>` 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 tmall-monthly-business-report 技能：」即可显式指定。
 
 ## 场景 1｜生成当月经营报告（最常用）
 
