@@ -91,6 +91,8 @@ a { color: var(--accent); text-decoration: none; }
 .skill-head .en { font-size: 13px; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 .skill-cat { font-size: 12px; color: var(--muted); margin-left: auto; flex: none;
   border: 1px solid var(--border); border-radius: 999px; padding: 2px 12px; }
+.skill-desc { font-size: 15px; color: var(--text); background: var(--bg);
+  border-radius: 10px; padding: 14px 16px; margin: 18px 0 4px; }
 
 /* Markdown 内容 */
 .skill h1, .skill h2 { font-size: 18px; margin: 26px 0 10px; }
@@ -147,135 +149,23 @@ footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 6
   <div class="content">
     <header class="hero">
       <h1>skill-hub 技能使用手册</h1>
-      <p>通用 Agent 技能仓库：客户端无关，任意支持技能 / MCP 的 agent 客户端均可使用。每个技能一个文件夹，内含 SKILL.md 与配套脚本。</p>
+      <p>每个技能解决一类具体问题。浏览下方卡片找到需要的技能，进入详情后复制示例提示词发给 agent，替换提示词中的占位符即可开始使用。</p>
       <div class="badges">
         <span class="badge">9 个技能</span>
         <span class="badge">4 个分类</span>
         <span class="badge">复制示例提示词即可使用</span>
       </div>
     </header>
-    <h2 class="section-title">电商 · 数据采集</h2><div class="cards"><a class="card" href="#skill-tmall-review-report"><div class="card-head"><img src="icons/tmall-review-report.svg" alt=""><div><div class="card-zh">天猫评价采集报告</div><div class="card-en">tmall-review-report</div></div></div><div class="card-desc">采集天猫店铺出售中商品的用户评价（含图片/追评/商家回复）与问大家问答数据，生成左侧主图导航的交互式 HTML 口碑总览报告（按累计销量降序、标题新标签打开详情页），并自动校验商品主图链接是否 404、过滤运费/补差/滤网/配件等非实物商品。全程浏览器模拟人工点击、不调后端接口，附带商品销售数据（价格/库存/累计销量/30日销量）。当用户提到采集天猫评论/评价、问大家、天猫商品口碑报告、重新生成商品总览、检查商品链接或主图是否有效时使用。</div></a><a class="card" href="#skill-tmall-price-checker"><div class="card-head"><img src="icons/tmall-price-checker.svg" alt=""><div><div class="card-zh">天猫价格核对</div><div class="card-en">tmall-price-checker</div></div></div><div class="card-desc">采集天猫/淘宝商品 SKU 价格数据（名称/原价/实付价/库存/图片），支持商家后台出售中列表（本店全店首选）/已打开标签页/列表页/URL 列表四种输入。下游输出 Excel（多 sheet 单工作簿、内嵌图片）/ CSV，核心能力是同店跨链接价格一致性核对（同一真实 SKU 复用到多个链接时排查漏改价）。当用户要求采集天猫商品价格、整理 SKU 价格表、核对各链接价格一致性、排查漏改价时使用。</div></a><a class="card" href="#skill-jd-review-collector"><div class="card-head"><img src="icons/jd-review-collector.svg" alt=""><div><div class="card-zh">京东评论采集分析</div><div class="card-en">jd-review-collector</div></div></div><div class="card-desc">采集京东商品页（item.jd.com）带图/视频买家评论并做口碑分析：下载评论原图与视频、逐条情感分类与关键词提炼，产出固定风格的交互式 HTML 报告（情感/评分/SKU/关键词/含视频多维筛选、图片灯箱、视频播放、唯一ID可复制）。当用户给出京东商品链接或提到"采集京东评论/评价""评论分析""买家秀下载""竞品口碑"时使用。内置反人机验证策略（默认50条、慢速翻页、逐页本地回传）。</div></a></div><h2 class="section-title">电商 · 经营报表</h2><div class="cards"><a class="card" href="#skill-tmall-sales-to-warehouse-reconciliation"><div class="card-head"><img src="icons/tmall-sales-to-warehouse-reconciliation.svg" alt=""><div><div class="card-zh">天猫销售仓库对账</div><div class="card-en">tmall-sales-to-warehouse-reconciliation</div></div></div><div class="card-desc">清洗天猫订单商家编码、按指定订单号分离补单，以物流信息和退款状态统计真实订单的 SKU 出库、退货和净销量，生成全量订单、真实订单、补单订单、退货订单、统计五个工作表，供仓库进销存对账。适用于天猫订单 Excel 整理、补单剔除和仓库销量退货核对。</div></a><a class="card" href="#skill-tmall-monthly-business-report"><div class="card-head"><img src="icons/tmall-monthly-business-report.svg" alt=""><div><div class="card-zh">天猫月度经营报表</div><div class="card-en">tmall-monthly-business-report</div></div></div><div class="card-desc">生成天猫店铺月度经营报告 Excel：订单拆分为全量/补单/退款/有效四个明细表，按商家编码做销售统计（数量/营业额/均价/成本/利润/毛利率），汇总平台费用与推广费每日明细，按 13 元/单计补单费，最终按财务模型输出全公式化的财报。适用于天猫店铺每月对账、经营分析、利润核算场景。</div></a></div><h2 class="section-title">语雀</h2><div class="cards"><a class="card" href="#skill-yuque-sheet"><div class="card-head"><img src="icons/yuque-sheet.svg" alt=""><div><div class="card-zh">语雀表格解析</div><div class="card-en">yuque-sheet</div></div></div><div class="card-desc">解析语雀表格文档（lakesheet）为结构化数据，并支持多种下游输出：打印高清图片、导出 Excel/CSV、数据分析。当用户给出 yuque.com 表格文档链接并要求解析/读取/导出/打印/转图片/转 Excel/分析/统计时使用。核心能力：浏览器登录态提取 → deflate 解压 → SpreadJS 解析。</div></a><a class="card" href="#skill-yuque-mcp"><div class="card-head"><img src="icons/yuque-mcp.svg" alt=""><div><div class="card-zh">语雀 MCP 操作</div><div class="card-en">yuque-mcp</div></div></div><div class="card-desc">通过 yuque MCP 服务器操作语雀（知识库、目录分组、文档、小记、搜索）。当用户提到语雀、在语雀创建分组/文档、整理知识库目录、读取或搜索语雀内容时使用。包含 MCP 接入配置、目录（TOC）操作标准流程与 429 限流处理办法。优先使用本技能而非浏览器自动化操作语雀。</div></a></div><h2 class="section-title">办公工具</h2><div class="cards"><a class="card" href="#skill-invoice-organizer"><div class="card-head"><img src="icons/invoice-organizer.svg" alt=""><div><div class="card-zh">发票整理</div><div class="card-en">invoice-organizer</div></div></div><div class="card-desc">整理指定目录中的发票，按费用用途、含税金额和销售方核心品牌重命名，删除确认重复项，并在对话中汇报数量与金额。适用于周期性发票归档和财务报销整理。</div></a><a class="card" href="#skill-picture-slicer"><div class="card-head"><img src="icons/picture-slicer.svg" alt=""><div><div class="card-zh">图片切割器</div><div class="card-en">picture-slicer</div></div></div><div class="card-desc">图片切割器：把超长图片（如电商详情长图）裁成编号分片。优先按 PSD/PSB 文件中的参考线位置切分——直接解析图像资源块（资源 1032）里的参考线坐标，不受 Photoshop 30000 像素画布限制；无参考线时支持按固定高度等分兜底。切分后自动校验完整性，可输出 PNG/JPG。当用户提到切图/图片分割、详情图切片、按参考线导出切片、长图太长无法一次导出时使用。</div></a></div>
-    <section class="skill" id="skill-tmall-review-report"><div class="skill-head"><img src="icons/tmall-review-report.svg" alt="天猫评价采集报告"><div><div class="zh">天猫评价采集报告</div><div class="en">tmall-review-report</div></div><span class="skill-cat">电商 · 数据采集</span></div><h1>天猫商品评价与口碑总览</h1>
-<h2>数据目录约定</h2>
-<p>在工作区建 <code>tmall_data/</code>，存放四类 JSON（采集产物），报告由 <code>scripts/build_report.py</code> 生成：</p>
-<ul>
-<li><code>products.json</code>：<code>[{id,title,img,price,stock,cum_sales,sales_30d}]</code>（img 为去掉 <code>_100x100xz_.webp</code> 后缀的原图 URL）</li>
-<li><code>reviews_part*.json</code>：<code>{ "&lt;id&gt;": {sold, rc, comments:[{user,meta,content,imgs,append,appendImgs,reply}]} }</code>，可分多个 part 文件</li>
-<li><code>wdj_raw.json</code>：<code>[{id,q,asker,time,shown}]</code>，shown 为"查看回答"抽屉原文（含 <code>展开 &lt;内容&gt; &lt;谁&gt;于 &lt;时间&gt; 回答 &lt;id&gt;</code> 片段）</li>
-</ul>
-<h2>流程 A：全量重新采集（浏览器模拟点击，禁调 mtop/后端接口）</h2>
-<h3>A1 商品列表（卖家后台 qn.taobao.com 出售中页）</h3>
-<p>翻页用 computer 点击分页右箭头；每页用 javascript_tool 提取（<code>tr.next-table-row</code>）：
-链接取 id，<code>td</code> 顺序为 标题/价格/库存/累计销量/30日销量。字段见 products.json 约定。</p>
-<h3>A2 评论（每个商品，详情页）</h3>
-<ol>
-<li><code>navigate</code> 到 <code>https://detail.tmall.com/item.htm?id=&lt;id&gt;</code></li>
-<li>JS 取 <code>已售</code>、<code>用户评价 · N</code>，对"查看全部评价"叶子节点 <code>scrollIntoView</code> 后返回中心坐标</li>
-<li>computer 点击该坐标打开抽屉</li>
-<li>JS 提取（抽屉 <code>div[class^="Drawer"]</code>，条目 <code>div[class^="Comment--"]</code>，最多 20 条）：
-   user=<code>userName--</code>，meta=<code>meta--</code>，content=<code>contentWrapper--</code> 下首个 <code>content--</code>，
-   主图=<code>contentWrapper--</code> 内 <code>album-- img</code> 且不在 <code>append--</code> 内，追评=<code>append--</code> innerText 及其 img，回复=<code>reply--</code>。
-   img 的 src 补 <code>https:</code> 并去掉 <code>_\d+x\d+.*$</code> 尺寸后缀。无"查看全部评价"按钮则 comments=[]。</li>
-</ol>
-<h3>A3 问大家（PC 详情页无此模块！用卖家后台）</h3>
-<ol>
-<li><code>navigate</code> <code>https://myseller.taobao.com/home.htm/comment-manage/ask-all?current=1&amp;pageSize=100</code>（首次有"我知道了"弹窗，JS 点掉）</li>
-<li>JS 提取 43 行式列表：每行取 <code>a[href*="item.htm"]</code> 的 id/title，行内文本解析 问题/提问人/时间/<code>暂无回答可展示</code></li>
-<li>有回答的行需点"查看回答"读抽屉。<strong>后台标签处于 hidden 时 setTimeout 被节流</strong>，用 <code>fetch('data:text/plain,')</code> 作微等待。注入 helper 后 fire-and-forget 启动循环、轻量轮询 <code>saved</code> 计数（页面 JS 在工具超时后仍继续跑）：</li>
-</ol>
-<pre><code class="language-js">const tick = () =&gt; fetch('data:text/plain,').then(()=&gt;{});
-// grab(i): 关旧抽屉→点第 i 个&quot;查看回答&quot;→tick 轮询抽屉→读&quot;已展示回答/卖家回答&quot;两 tab 的 table innerText→关抽屉；结果存 window.__wdjRes[i]
-// 启动: window.__wdjRun(idxs) 内部 for 循环 await grab；工具调用只返回 'started'，之后轮询 Object.keys(__wdjRes).length
-</code></pre>
-<ol start="4">
-<li>完成后分块取回 <code>__wdjAll</code> 与 <code>__wdjRes</code>，合并写 <code>wdj_raw.json</code>（shown 取 res.shown）</li>
-</ol>
-<h3>坑位备忘</h3>
-<ul>
-<li>javascript_tool 单次调用保持 &lt;4s；长任务用 fire-and-forget + 轮询</li>
-<li>navigate 会激活标签；hidden 标签定时器节流 6 倍以上</li>
-<li>录入 img URL 易抄错字符 → 必须做链接校验（流程 B 自动做）</li>
-</ul>
-<h2>流程 B：重新生成报告 + 链接基础检查</h2>
-<pre><code class="language-bash">python3 scripts/build_report.py --data-dir &lt;tmall_data&gt; --out &lt;输出.html&gt;
-</code></pre>
-<p>脚本自动：过滤标题含 运费/补差/非实物/滤网/配件 的商品（<code>--exclude</code> 可改）；按 cum_sales 降序；
-<strong>逐张 HTTP 校验主图</strong>：404 → 打印 BROKEN 列表并以退出码 2 结束（先修 products.json 再重跑），其它网络错误仅警告；
-生成 HTML：左侧主图导航（销量/评论/问大家角标）、右侧 用户评价/问大家 双 tab、评论图灯箱、标题链接新标签打开详情页。</p><h2>使用示例</h2><p>复制下面任一场景的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 tmall-review-report 技能：」即可显式指定。采集依赖浏览器中已登录的天猫卖家后台会话。</p>
+    <h2 class="section-title">电商 · 数据采集</h2><div class="cards"><a class="card" href="#skill-tmall-review-report"><div class="card-head"><img src="icons/tmall-review-report.svg" alt=""><div><div class="card-zh">天猫评价采集报告</div><div class="card-en">tmall-review-report</div></div></div><div class="card-desc">采集天猫店铺出售中商品的用户评价（含图片/追评/商家回复）与问大家问答数据，生成左侧主图导航的交互式 HTML 口碑总览报告（按累计销量降序、标题新标签打开详情页），并自动校验商品主图链接是否 404、过滤运费/补差/滤网/配件等非实物商品。全程浏览器模拟人工点击、不调后端接口，附带商品销售数据（价格/库存/累计销量/30日销量）。当用户提到采集天猫评论/评价、问大家、天猫商品口碑报告、重新生成商品总览、检查商品链接或主图是否有效时使用。</div></a><a class="card" href="#skill-tmall-price-checker"><div class="card-head"><img src="icons/tmall-price-checker.svg" alt=""><div><div class="card-zh">天猫价格核对</div><div class="card-en">tmall-price-checker</div></div></div><div class="card-desc">采集天猫/淘宝商品 SKU 价格数据（名称/原价/实付价/库存/图片），支持商家后台出售中列表（本店全店首选）/已打开标签页/列表页/URL 列表四种输入。下游输出 Excel（多 sheet 单工作簿、内嵌图片）/ CSV，核心能力是同店跨链接价格一致性核对（同一真实 SKU 复用到多个链接时排查漏改价）。当用户要求采集天猫商品价格、整理 SKU 价格表、核对各链接价格一致性、排查漏改价时使用。</div></a><a class="card" href="#skill-jd-review-collector"><div class="card-head"><img src="icons/jd-review-collector.svg" alt=""><div><div class="card-zh">京东评论采集分析</div><div class="card-en">jd-review-collector</div></div></div><div class="card-desc">采集京东商品页（item.jd.com）带图/视频买家评论并做口碑分析：下载评论原图与视频、逐条情感分类与关键词提炼，产出固定风格的交互式 HTML 报告（情感/评分/SKU/关键词/含视频多维筛选、图片灯箱、视频播放、唯一ID可复制）。当用户给出京东商品链接或提到"采集京东评论/评价""评论分析""买家秀下载""竞品口碑"时使用。内置反人机验证策略（默认50条、慢速翻页、逐页本地回传）。</div></a></div><h2 class="section-title">电商 · 经营报表</h2><div class="cards"><a class="card" href="#skill-tmall-sales-to-warehouse-reconciliation"><div class="card-head"><img src="icons/tmall-sales-to-warehouse-reconciliation.svg" alt=""><div><div class="card-zh">天猫销售仓库对账</div><div class="card-en">tmall-sales-to-warehouse-reconciliation</div></div></div><div class="card-desc">清洗天猫订单商家编码、按指定订单号分离补单，以物流信息和退款状态统计真实订单的 SKU 出库、退货和净销量，生成全量订单、真实订单、补单订单、退货订单、统计五个工作表，供仓库进销存对账。适用于天猫订单 Excel 整理、补单剔除和仓库销量退货核对。</div></a><a class="card" href="#skill-tmall-monthly-business-report"><div class="card-head"><img src="icons/tmall-monthly-business-report.svg" alt=""><div><div class="card-zh">天猫月度经营报表</div><div class="card-en">tmall-monthly-business-report</div></div></div><div class="card-desc">生成天猫店铺月度经营报告 Excel：订单拆分为全量/补单/退款/有效四个明细表，按商家编码做销售统计（数量/营业额/均价/成本/利润/毛利率），汇总平台费用与推广费每日明细，按 13 元/单计补单费，最终按财务模型输出全公式化的财报。适用于天猫店铺每月对账、经营分析、利润核算场景。</div></a></div><h2 class="section-title">语雀</h2><div class="cards"><a class="card" href="#skill-yuque-sheet"><div class="card-head"><img src="icons/yuque-sheet.svg" alt=""><div><div class="card-zh">语雀表格解析</div><div class="card-en">yuque-sheet</div></div></div><div class="card-desc">解析语雀表格文档（lakesheet）为结构化数据，并支持多种下游输出：打印高清图片、导出 Excel/CSV、数据分析。当用户给出 yuque.com 表格文档链接并要求解析/读取/导出/打印/转图片/转 Excel/分析/统计时使用。核心能力：浏览器登录态提取 → deflate 解压 → SpreadJS 解析。</div></a><a class="card" href="#skill-yuque-mcp"><div class="card-head"><img src="icons/yuque-mcp.svg" alt=""><div><div class="card-zh">语雀 MCP 操作</div><div class="card-en">yuque-mcp</div></div></div><div class="card-desc">通过 yuque MCP 服务器操作语雀（知识库、目录分组、文档、小记、搜索）。当用户提到语雀、在语雀创建分组/文档、整理知识库目录、读取或搜索语雀内容时使用。包含 MCP 接入配置、目录（TOC）操作标准流程与 429 限流处理办法。优先使用本技能而非浏览器自动化操作语雀。</div></a></div><h2 class="section-title">办公工具</h2><div class="cards"><a class="card" href="#skill-invoice-organizer"><div class="card-head"><img src="icons/invoice-organizer.svg" alt=""><div><div class="card-zh">发票整理</div><div class="card-en">invoice-organizer</div></div></div><div class="card-desc">整理指定目录中的发票，按费用用途、含税金额和销售方核心品牌重命名，删除确认重复项，并在对话中汇报数量与金额。适用于周期性发票归档和财务报销整理。</div></a><a class="card" href="#skill-picture-slicer"><div class="card-head"><img src="icons/picture-slicer.svg" alt=""><div><div class="card-zh">图片切割器</div><div class="card-en">picture-slicer</div></div></div><div class="card-desc">图片切割器：把超长图片（如电商详情长图）裁成编号分片。优先按 PSD/PSB 参考线切分，也支持指定高度、指定张数、自定义切分要求，以及无依据时按高宽比严格小于 2 自动近等高切分。切分后自动校验完整性，可输出 PNG/JPG。当用户提到切图/图片分割、详情图切片、按参考线导出切片、长图太长无法一次导出时使用。</div></a></div>
+    <section class="skill" id="skill-tmall-review-report"><div class="skill-head"><img src="icons/tmall-review-report.svg" alt="天猫评价采集报告"><div><div class="zh">天猫评价采集报告</div><div class="en">tmall-review-report</div></div><span class="skill-cat">电商 · 数据采集</span></div><p class="skill-desc">采集天猫店铺出售中商品的用户评价（含图片/追评/商家回复）与问大家问答数据，生成左侧主图导航的交互式 HTML 口碑总览报告（按累计销量降序、标题新标签打开详情页），并自动校验商品主图链接是否 404、过滤运费/补差/滤网/配件等非实物商品。全程浏览器模拟人工点击、不调后端接口，附带商品销售数据（价格/库存/累计销量/30日销量）。当用户提到采集天猫评论/评价、问大家、天猫商品口碑报告、重新生成商品总览、检查商品链接或主图是否有效时使用。</p><h2>使用示例</h2><p>复制下面任一场景的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 tmall-review-report 技能：」即可显式指定。采集依赖浏览器中已登录的天猫卖家后台会话。</p>
 <h2>场景 1｜全量采集 → 商品总览（最常用）</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
 <p>我的浏览器已登录天猫卖家后台。请采集本店出售中商品的销售数据、用户评价和问大家问答，生成交互式 HTML 商品总览。</p>
 </blockquote></div>
 <h2>场景 2｜已有采集数据 → 重新生成总览</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
-<p>这个目录里有之前采集好的店铺数据：<tmall_data目录路径>。请重新生成商品总览 HTML。</p>
-</blockquote></div></section><section class="skill" id="skill-tmall-price-checker"><div class="skill-head"><img src="icons/tmall-price-checker.svg" alt="天猫价格核对"><div><div class="zh">天猫价格核对</div><div class="en">tmall-price-checker</div></div><span class="skill-cat">电商 · 数据采集</span></div><h1>天猫 SKU 价格采集与一致性核对</h1>
-<h2>第 0 步：采集前自检（必做，不符即停）</h2>
-<p>开始采集前确认三件事一致，任一不符<strong>立即停止并询问用户</strong>，不得自行猜测数据源继续：</p>
-<ol>
-<li><strong>浏览器</strong>：浏览器自动化当前连接的浏览器是否就是用户说的那个（同名扩展可能装在 Chrome/Canary/Edge 多个浏览器里，守护进程同一时刻只绑定一个扩展；用 <code>find_tab(active:true)</code> 借标签页，借到的是哪个浏览器的就是哪个）。连接不符时引导用户在目标浏览器启用扩展并重启浏览器，再重试。</li>
-<li><strong>账号与店铺</strong>：借到的标签页/后台页显示的登录账号、店铺名是否就是用户口中的"本店"。买家账号的卖家后台出售中为 0 件——发现 0 件先怀疑接错浏览器/账号，而不是店铺真的没商品。</li>
-<li><strong>页面</strong>：用户说"当前打开的是 X 页"时，先读取页面确认类型；实际不是 X 页时告知用户并确认真实入口，不要默默改用其他来源凑数。</li>
-</ol>
-<h2>核心流程：输入 → 规范化 data.json</h2>
-<p><strong>输入四种形态</strong>：
-- <strong>B0 商家后台出售中列表（"本店/全店"首选，最快路径）</strong>：直接 <code>navigate</code> 到 <code>https://myseller.taobao.com/home.htm/SellManage/on_sale/?current=1&amp;pageSize=20</code>，从 <code>document.body.innerText</code> 用正则 <code>ID:(\d{6,})</code> 取商品 ID（同时可取标题），翻页改 <code>current</code> 参数直到取满（页头有"共N件商品x/y"）。<strong>不要走店铺前台</strong>（category.htm/search.htm 新版装修页渲染不稳定，反复刷新易触发风控变空页）。拿到 ID 列表后逐个打开详情页采集。
-- <strong>A 已打开的详情标签页</strong>：<code>tabs_context</code> 过滤 <code>item.htm?id=</code>（天猫/淘宝）标签页，直接复用。
-- <strong>B 列表页</strong>（店铺全部宝贝/搜索结果）：先滚动加载完毕，<code>javascript_tool</code> 执行 <code>scripts/extract_links.js</code> 全文取商品 URL 列表，再逐个打开（已有同 URL 标签页则复用，否则 <code>tabs_create_mcp</code> + <code>navigate</code>）。
-- <strong>C 用户给的 URL 列表</strong>：同 B 逐个打开。</p>
-<p>详情页只认 detail.tmall.com / item.taobao.com，同一批可混合。</p>
-<p>每个商品：在其标签页 <code>javascript_tool</code> 执行 <code>scripts/extract_tmall_sku.js</code> 全文，聚合为工作目录 <code>data.json</code>。</p>
-<h3>适配器</h3>
-<ul>
-<li><code>scripts/extract_tmall_sku.js</code> — 读 <code>window.__ICE_APP_CONTEXT__.loaderData.home.data.res</code>：<code>skuCore.sku2info</code>（价格/库存）+ <code>skuBase.props/skus</code>（规格名/图）。一个链接多个 SKU。</li>
-</ul>
-<h3>data.json schema（统一）</h3>
-<pre><code class="language-json">{
-  &quot;collectedAt&quot;: &quot;YYYY-MM-DD&quot;, &quot;platform&quot;: &quot;tmall&quot;, &quot;shop&quot;: &quot;店铺名&quot;,
-  &quot;items&quot;: [{
-    &quot;platform&quot;: &quot;tmall&quot;, &quot;itemId&quot;: &quot;商品ID&quot;, &quot;title&quot;: &quot;标题&quot;, &quot;url&quot;: &quot;链接&quot;,
-    &quot;shop&quot;: &quot;店铺名&quot;,
-    &quot;rows&quot;: [{
-      &quot;skuId&quot;: &quot;...&quot;, &quot;skuName&quot;: &quot;规格名（多属性用 + 连接）&quot;,
-      &quot;listPrice&quot;: &quot;标价/划线价&quot;, &quot;promoPrice&quot;: &quot;实付价（店铺优惠后）&quot;,
-      &quot;quantity&quot;: 库存或null,
-      &quot;image&quot;: &quot;SKU图URL&quot;
-    }]
-  }]
-}
-</code></pre>
-<h2>下游 A：Excel（默认，多 sheet 单工作簿，勿拆多文件）</h2>
-<ol>
-<li>（需内嵌图时）<code>python3 scripts/download_images.py data.json imgs/</code> — 按 URL 去重下载 + 160px 缩略图 + manifest.json。</li>
-<li><code>python3 scripts/build_report.py data.json out.xlsx --manifest imgs/manifest.json [--shop 店铺名]</code>
-   - 输出 4 个 sheet：SKU明细 / 商品汇总 / 核对总览（同店跨链接一致性判定）/ 差异明细（偏离众数价标红）。
-   - 依赖 openpyxl/pillow：先 <code>import</code> 验证，缺则 <code>pip install</code>。</li>
-</ol>
-<h2>下游 B：CSV</h2>
-<p><code>python3 scripts/to_csv.py data.json out.csv</code> — 明细行展平。</p>
-<h2>下游 C：数据分析</h2>
-<p>直接读 data.json 聚合（各链接价格带、真实 SKU 分组统计），按需输出结论。</p>
-<h2>一致性核对口径（内置于 build_report.py）</h2>
-<ul>
-<li>同一 SKU 图片 URL = 同一真实 SKU（卖家常把同一真实 SKU 复用到多个链接承接流量）。</li>
-<li>基准价 = 各链接实付价的众数；原价或实付价偏离即标红，并给出建议实付价。</li>
-<li>疑似同 SKU 提示：同容量且归一化名称相似度 ≥0.8 但图片不同；排除 wifi 有无、旋钮/触控、颜色差异。</li>
-</ul>
-<h2>Pitfalls</h2>
-<ul>
-<li>必须在用户已登录的 Chrome 标签页内执行；不要用 requests/无头浏览器抓详情页（反爬空壳）。</li>
-<li>天猫 <code>window.__ICE_APP_CONTEXT__</code> 不存在 = 未加载完或旧框架：刷新重试，仍失败如实告知，不得编造数据。</li>
-<li>天猫 skuId "0" 是整品默认行（起步价，可能带"起"字），跳过；多属性 propPath 形如 <code>pid:vid;pid:vid</code>。</li>
-<li><strong>单规格商品（滤网/配件/运费补差链接等）<code>skuBase.skus</code> 为空数组</strong>，价格库存挂在 <code>skuCore.sku2info["0"]</code> 上：采为一行 <code>skuId:"0", skuName:"默认规格（无多SKU）"</code>，image 留空。</li>
-<li><strong>部分 SKU 行 <code>subPrice</code> 为空</strong>（无促销时实付价=标价）：build_report.py 对 <code>promoPrice=None</code> 会抛 TypeError，聚合 data.json 时把空 promoPrice 回填为 listPrice。</li>
-<li>价格为采集时点页面快照，会随促销变动；Excel 内嵌图片浮于单元格上，排序/筛选后不随行。</li>
-<li>列表页取链接前务必滚动/翻页加载完；extract_links 返回 0 条时退回正则 <code>[?&amp;]id=\d+</code> 扫页面文本。</li>
-</ul>
-<h2>Verification</h2>
-<ul>
-<li>openpyxl 读回工作簿：核对各 sheet 行数、内嵌图片数、冲突/标红单元格。</li>
-<li>天猫去重图片数通常≈真实 SKU 数。</li>
-</ul><h2>使用示例</h2><p>复制下面任一场景的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 tmall-price-checker 技能：」即可显式指定。采集依赖浏览器中已登录的天猫/淘宝会话，店铺身份以当前登录的浏览器为准，无需填写店铺名。</p>
+<p>这个目录里有之前采集好的店铺数据：&lt;tmall_data目录路径&gt;。请重新生成商品总览 HTML。</p>
+</blockquote></div></section><section class="skill" id="skill-tmall-price-checker"><div class="skill-head"><img src="icons/tmall-price-checker.svg" alt="天猫价格核对"><div><div class="zh">天猫价格核对</div><div class="en">tmall-price-checker</div></div><span class="skill-cat">电商 · 数据采集</span></div><p class="skill-desc">采集天猫/淘宝商品 SKU 价格数据（名称/原价/实付价/库存/图片），支持商家后台出售中列表（本店全店首选）/已打开标签页/列表页/URL 列表四种输入。下游输出 Excel（多 sheet 单工作簿、内嵌图片）/ CSV，核心能力是同店跨链接价格一致性核对（同一真实 SKU 复用到多个链接时排查漏改价）。当用户要求采集天猫商品价格、整理 SKU 价格表、核对各链接价格一致性、排查漏改价时使用。</p><h2>使用示例</h2><p>复制下面任一场景的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 tmall-price-checker 技能：」即可显式指定。采集依赖浏览器中已登录的天猫/淘宝会话，店铺身份以当前登录的浏览器为准，无需填写店铺名。</p>
 <h2>场景 1｜已打开的标签页 → Excel 价格表（最常用）</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
 <p>我浏览器已登录天猫，并打开了几个商品详情页。请把当前打开的天猫/淘宝商品标签页里的 SKU 全部采集下来，整理成带内嵌图片的 Excel 工作簿。</p>
@@ -301,234 +191,11 @@ footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 6
 <li>&lt;链接2&gt;</li>
 <li>&lt;链接3&gt;</li>
 </ul>
-</blockquote></div></section><section class="skill" id="skill-jd-review-collector"><div class="skill-head"><img src="icons/jd-review-collector.svg" alt="京东评论采集分析"><div><div class="zh">京东评论采集分析</div><div class="en">jd-review-collector</div></div><span class="skill-cat">电商 · 数据采集</span></div><h1>京东评论采集与分析</h1>
-<p>对京东商品页「图/视频」评论做限量采集、媒体下载、情感/关键词分析，产出固定模板风格的 HTML 交互报告。</p>
-<h2>默认规则（用户约定，可被当次指定覆盖）</h2>
-<ul>
-<li>只采「图/视频」筛选下的评论；默认 <strong>50 条</strong>（5 页 × 10），采够即停。</li>
-<li>翻页间隔 3~5.5s 随机；每页<strong>立即 POST 回传本地接收服务</strong>落盘。</li>
-<li>遇人机验证（页面刷新、注入的 JS 状态丢失）：已回传 <strong>≥20 条</strong> → 用现有数据收尾；&lt;20 条 → 暂停询问用户。</li>
-<li>不追求全量：平台对带图评论仅开放约 75 页（maxPage），强爬必触发验证。</li>
-</ul>
-<h2>工作流</h2>
-<pre><code>- [ ] 1. 定位标签页/商品ID，建工作目录 &lt;workspace&gt;/jd_&lt;pid&gt;/{incoming,media}，后台启动 receiver
-- [ ] 2. 页面注入 scripts/crawl_kit.js；滚到底渲染评论区 → 点 #comment-root .all-btn 开浮层 → 点「图/视频」chip → 清空 __rateReq 并 __mkRun
-- [ ] 3. __crawl('media', 5, 50)；轮询 __runStatus()；按验证规则收尾
-- [ ] 4. merge_runs.py 合并 → download_media.py 下载媒体
-- [ ] 5. 读 review_texts.txt，逐条写 sentiment_keywords.json（agent 亲自分析）
-- [ ] 6. build_report.py 用内置模板生成 index.html，交付 outputs/京东评论采集_&lt;pid&gt;/
-</code></pre>
-<h3>关键操作细节</h3>
-<ul>
-<li>注入：用 <code>javascript_tool</code> 执行 <code>scripts/crawl_kit.js</code> 全文（一次）。接收地址默认 <code>http://127.0.0.1:18923</code>，可用 <code>window.__recvUrl</code> 覆盖。</li>
-<li>筛选生效校验：捕获请求 body 含 <code>"type":"4"</code>。</li>
-<li>验证检测：<code>window.__runStatus</code> 报 not a function / <code>__runs</code> 丢失 = 页面被刷新；改读 <code>incoming/</code> 计数收尾。</li>
-<li>接收服务：<code>python3 scripts/receiver.py &lt;workdir&gt;/incoming</code>（后台运行）。</li>
-</ul>
-<h3>情感与关键词分析规范</h3>
-<ul>
-<li>情感四类：<strong>正面 / 负面 / 中性 / 有褒有贬</strong>。含明确吐槽（哪怕轻微，如"偏重""有水流声"）归「有褒有贬」；平淡/不及预期归「中性」。</li>
-<li>关键词：产品维度短语，逗号分隔（雾量大、静音不扰眠、容量大、加水省心）；吐槽点同样进关键词。</li>
-<li>产出 <code>sentiment_keywords.json</code>：<code>{"R01": {"sentiment": "...", "keywords": "a,b,c"}, ...}</code>，key 与 R 序号对应。</li>
-</ul>
-<h3>追评（afterComment）注意</h3>
-<ul>
-<li>字段默认就采：build_report 提取 afterComment，模板有内容时显示琥珀色「追评」块。</li>
-<li>但默认样本（图/视频筛选 + 最新排序）通常<strong>不含追评</strong>：曾遇商品浮层显示「追评 35」而所采 50 条追评全空。用户问起时先查本地数据（merge 时统计过 with afterComment text 计数），不要回站核对。</li>
-<li>用户关注追评时：主采集后点浮层「追评」chip，同图/视频流程捕获 body 参数，再 <code>__crawl('after', 页数, 条数)</code> 补一轮（条数可小，如 35 条≈4 页）；merge_runs 按 commentId 自动去重合并。</li>
-</ul>
-<h3>报告（模板固化，风格功能保持一致）</h3>
-<ul>
-<li>模板 <code>templates/report.html</code> 是唯一风格来源，<strong>不要手写新 HTML</strong>；用 <code>scripts/build_report.py &lt;workdir&gt; &lt;pid&gt; "&lt;商品名&gt;" [短标题]</code> 注入数据生成。</li>
-<li>报告功能基线：统计头（条数/图/视频/正面率）、情感光谱、高频关键词 TOP（点击多选筛选，OR 语义）、吐槽点专栏；筛选器含 情感 / 评分 / SKU 下拉单选 / 关键词多选 / 含视频；搜索高亮；排序（顺序/点赞/时间）；图片灯箱（←→/Esc）；视频内联播放；追评块（有则显示）；<strong>唯一 ID（commentId）完整展示、点击复制</strong>；相对路径引用 media/，离线可开。</li>
-</ul>
-<h2>唯一 ID 规则</h2>
-<ul>
-<li>优先京东原生 <code>commentId</code>（全局唯一）；若缺失则生成稳定 ID（如 <code>sha1(昵称+时间+文案前80字)</code> 前 16 位）。</li>
-<li>R01… 序号仅用于行号与媒体文件命名（R{序号}_img{n}.jpg / R{序号}_vid{n}.mp4 / _cover.jpg）。</li>
-</ul>
-<h2>技术事实（踩坑沉淀）</h2>
-<ul>
-<li>旧接口 <code>club.jd.com/comment/productPageComments.action</code> 已废弃。新接口 POST <code>api.m.jd.com/client.action</code>（<code>appid=pc-rate-qa&amp;functionId=getCommentListPage</code>）带 h5st 签名，<strong>只能页面内触发 + XHR hook 截响应</strong>。</li>
-<li>响应：<code>result.floors[mId=commentlist-list].data[].commentInfo</code>；翻页终点 <code>result.pageInfo.data.hasNextPage/maxPage</code>。</li>
-<li>commentInfo：userNickName(脱敏)、commentData、commentDate、commentScore、productSpecifications、praiseCnt、replyList(商家回复)、afterComment(追评)；pictureInfoList mediaType=1 图（largePicURL <strong>去 <code>.dpg</code> 后缀即原图</strong>）、=2 视频（videoPlayUrl 为 mp4 直链，picURL 封面）。</li>
-<li>类名带 hash：滚动容器按「浮层内 overflow-y auto/scroll 且 scrollHeight&gt;clientHeight」定位（crawl_kit 已实现）。</li>
-<li>https 页面 fetch <code>http://127.0.0.1</code> 属回环豁免；Content-Type <code>text/plain</code> 免 CORS 预检。下载媒体带 <code>Referer: https://item.jd.com/</code>。</li>
-</ul>
-<h2>依赖</h2>
-<p>openpyxl 非必需；<strong>Pillow 非必需</strong>（报告不嵌图）；脚本仅用标准库。浏览器侧需 Chrome 已登录京东（用户标签页）。</p><h2>使用示例</h2><p>复制下面的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 jd-review-collector 技能：」即可显式指定。采集依赖浏览器中已登录的京东会话，请先确认登录状态。</p>
+</blockquote></div></section><section class="skill" id="skill-jd-review-collector"><div class="skill-head"><img src="icons/jd-review-collector.svg" alt="京东评论采集分析"><div><div class="zh">京东评论采集分析</div><div class="en">jd-review-collector</div></div><span class="skill-cat">电商 · 数据采集</span></div><p class="skill-desc">采集京东商品页（item.jd.com）带图/视频买家评论并做口碑分析：下载评论原图与视频、逐条情感分类与关键词提炼，产出固定风格的交互式 HTML 报告（情感/评分/SKU/关键词/含视频多维筛选、图片灯箱、视频播放、唯一ID可复制）。当用户给出京东商品链接或提到"采集京东评论/评价""评论分析""买家秀下载""竞品口碑"时使用。内置反人机验证策略（默认50条、慢速翻页、逐页本地回传）。</p><h2>使用示例</h2><p>复制下面的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 jd-review-collector 技能：」即可显式指定。采集依赖浏览器中已登录的京东会话，请先确认登录状态。</p>
 <h2>场景 1｜单商品评论采集 + 口碑报告</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
 <p>请采集这个京东商品的带图评论并做口碑分析，输出 HTML 报告：&lt;商品链接&gt;。我的浏览器已登录京东。</p>
-</blockquote></div></section><section class="skill" id="skill-tmall-sales-to-warehouse-reconciliation"><div class="skill-head"><img src="icons/tmall-sales-to-warehouse-reconciliation.svg" alt="天猫销售仓库对账"><div><div class="zh">天猫销售仓库对账</div><div class="en">tmall-sales-to-warehouse-reconciliation</div></div><span class="skill-cat">电商 · 经营报表</span></div><h1>订单清洗与仓库销量核对</h1>
-<p>将平台导出的订单明细变为可追溯的仓库对账工作簿。这里的“销量”表示订单中有物流信息的出库件数；“退货”表示其中申请退款的件数，不表示仓库已签收入库。保留补单与真实订单的分区，以及退货与真实订单的包含关系。</p>
-<p>使用当前环境可用的表格读取、编辑、公式计算与渲染能力；已有表格处理规范时遵守其工具与格式要求。不要假设操作系统、客户端、文件位置、月份、店铺、SKU 映射或上一次会话的数据。</p>
-<h2>开始时引导用户</h2>
-<p>先检查用户已经提供的信息和可访问文件，再简短说明：</p>
-<blockquote>
-<p>我会保留全量订单，按你提供的补单号分成真实订单和补单订单，再按商家编码统计有物流的出库件数及其中申请退款的件数，另列退货订单供仓库核对。退货数量不代表仓库已收货。</p>
-</blockquote>
-<p>每次任务需要：订单明细文件、补单订单号（或明确本次无补单）、必要的编码合并规则。已提供或已确认的信息不重复问；先做文件检查、状态枚举等不依赖回答的工作。缺失信息尽早集中询问，避免逐条盘问。</p>
-<ul>
-<li>首次使用，说明下文默认口径，并请用户确认或调整；已明确认可该口径的会话直接执行。</li>
-<li>未提供补单号时，询问“请提供本次补单订单号，或说明本次无补单”。不把未提供自动解释为没有补单。</li>
-<li>不确定来源工作表、业务状态或 SKU 含义时，给出候选项、记录数量和建议。只有影响业务结果的决定需要确认。</li>
-<li>用户若只要分析、预览或流程说明，不擅自改文件。用户明确要求处理并保存时，常规操作直接完成。</li>
-</ul>
-<h2>输入检查与字段</h2>
-<p>识别表头和实际数据区域，读取完整字段，不能只抽样后直接统计。</p>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>用途与检查</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>商家编码</td>
-<td>SKU 主键；作为文本保留大小写、连字符、前导零</td>
-</tr>
-<tr>
-<td>购买数量</td>
-<td>累计件数；不能用记录条数代替</td>
-</tr>
-<tr>
-<td>子订单编号、主订单编号</td>
-<td>补单号同时匹配两列；至少需要一个可靠订单编号字段</td>
-</tr>
-<tr>
-<td>物流单号、物流公司</td>
-<td>任一非空代表出库；缺少整列不能直接视作所有值为空</td>
-</tr>
-<tr>
-<td>退款状态</td>
-<td>判断退款申请；不能仅靠订单状态或退款金额推断</td>
-</tr>
-<tr>
-<td>商品标题、商品属性</td>
-<td>识别非实物、辅助核对；无法识别非实物时向用户补充询问</td>
-</tr>
-<tr>
-<td>订单状态、退款金额、发货时间</td>
-<td>辅助解释异常；不取代物流和退款状态的口径</td>
-</tr>
-</tbody>
-</table>
-<p>字段别名应按语义映射并记录；关键列缺失或存在多个可能映射时先澄清。保留源字段名称和所有原始列。确认每行代表子订单商品明细，而非总计、分页重复表头或仓库拆包明细。</p>
-<p>订单号在全过程中使用精确文本，不转浮点数。输入列表可以自动清理空行、两端空格、列表序号和完全重复号码，报告去重数量。表格中超长数字单元格可能已经丢失精度，科学计数法只是显示问题与真实精度损失须区分；不能通过补零猜测恢复，发现损失要求原始文本导出或可靠来源。</p>
-<p>数量可将严格数值文本转换为数值；空白、负数、非数值、商品件数的异常小数须核对。不能默认填 1、默认为 0 或截断小数。重复子订单明细不自动删除，先排查重复导出、拆分发货或不同商品行。</p>
-<p>判断空白时可以忽略两端空格；“-”“无物流”“暂无”等非空占位文本不应默默当成真实物流，需要提示核对。零、缺失、未知分别处理。</p>
-<h2>保留全量与统一编码</h2>
-<ol>
-<li>新文件识别可靠的原始全量订单 sheet，重命名为“全量订单”。保留全部记录；编码标准化不等于删改订单数量、状态或其他字段。</li>
-<li>应用用户已确认的编码映射，报告每组映射涉及的记录数。新发现的相似名称仅建议合并，不因相似、大小写或型号推断就改码。</li>
-<li>编码映射优先来自本次输入或已确认的会话规则。不内置某家店的映射，不把示例当通用规则。遇到映射链、循环或互相冲突先明确最终目标，避免次序影响结果。天猫驰梦店的标准编码清单见 <a href="references/standard-skus.md">标准商家编码</a>，仅作非标准编码识别参考，映射仍以用户本次确认为准。</li>
-<li>全量订单及其派生表保持统一后的商家编码一致；在统计页的说明区记录生效映射。修改源文件前保留可恢复的原版，或使用用户指定的新输出文件。</li>
-</ol>
-<p>已有输出时先执行 <a href="references/edge-cases.md#重复运行">重复运行与异常处理</a>，不能将已经剔除补单的表误当全量，也不能未经说明覆盖用户另加的仓库核对信息。</p>
-<h2>分拣订单：全量保留、两表互斥</h2>
-<p>对每条全量订单记录，将输入补单号与子订单编号、主订单编号精确匹配，任一匹配即归入补单订单。同一行即使两列同时匹配也只分配一次。</p>
-<ul>
-<li><strong>全量订单</strong>：全部标准化记录，保留原有顺序。</li>
-<li><strong>真实订单</strong>：未匹配补单号的记录。</li>
-<li><strong>补单订单</strong>：匹配补单号的记录。</li>
-<li>确认无补单时，补单订单保留表头，真实订单包含全量记录。</li>
-<li>一个主订单号可匹配多条商品明细，应全部分拣并解释“号码数”与“记录数”不同。</li>
-<li>未匹配号码单独报告；继续处理已匹配部分，提醒未匹配号码未影响本次分拣，必要时待补充来源后重跑。</li>
-</ul>
-<p>复制完整行与表头并保留格式，不只保留统计列。派生表可维持全量中的相对行序，无需按输入号码顺序重排。其他无关 sheet 不变。</p>
-<h2>实物识别、出库与退货</h2>
-<p>只对“真实订单”运行业务判断。先排除非实物，再判断出库，再判断退货。所有订单仍保留在相应明细表中。</p>
-<h3>非实物</h3>
-<p>明确的运费、补差价、差价支付、非实物咨询等不计任何销量或退货，也不进入退货订单。综合编码、标题与商品属性识别，不能因为标题含“包邮”“运费险”“补发”等词就排除正常商品。</p>
-<p>滤网、配件、赠送但实际出库的实物不能仅因不是主机而排除；用户另有范围要求时遵循并注明。疑似非实物但不能确定的记录列出供用户判定，不默默删除。</p>
-<h3>默认统计口径</h3>
-<table>
-<thead>
-<tr>
-<th>指标</th>
-<th>规则</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>出库销量</td>
-<td>实物，物流单号或物流公司至少一项有效非空，累计购买数量</td>
-</tr>
-<tr>
-<td>未出库</td>
-<td>两项物流信息均为空，不计销量；即使有发货时间也不算</td>
-</tr>
-<tr>
-<td>退货量</td>
-<td>实物、已出库，并且退款状态表示有退款申请，累计确认的退货件数</td>
-</tr>
-<tr>
-<td>净销量</td>
-<td>出库销量减退货量</td>
-</tr>
-</tbody>
-</table>
-<p>默认处理真实订单全部记录，不另按下单、付款或发货月份过滤。文件名含“8 月”不能自动排除跨月行；发现跨月时说明，用户要按日历月份核对再明确日期字段和范围。</p>
-<p>先枚举实际退款状态及频数，再建立状态映射：</p>
-<ul>
-<li><code>没有申请退款</code>、明确无申请状态：不计退货。</li>
-<li><code>退款成功</code>：已出库的实物通常计退货；未出库不计。</li>
-<li><code>卖家已经同意退款，等待买家退货</code>：已出库即计退货，包括订单状态仍为 <code>卖家已发货，等待买家确认</code> 的情形。不要要求交易关闭、退款成功或仓库签收。</li>
-<li>其他明确处于退款申请/退货处理中的状态按同一申请口径纳入，并向用户展示映射。</li>
-<li>空白、未知状态、已撤销、被拒绝、申请关闭、仅退款不退货、部分退款，参考 <a href="references/edge-cases.md#退款与数量例外">退款与数量例外</a>；不能用“不是没有申请退款”一条规则把所有异常状态无差别计入。</li>
-</ul>
-<p>当一行购买多件但只退部分、退款可能只是差价、或有明确不退货的信息，不能凭金额比例推算退货件数，也不能把整行购买数量自动作为实际退回数量。询问采用申请口径整行统计还是确认退货件数，记录依据。待确认部分不输出无保留的精确净销量。</p>
-<p>实物已出库但缺商家编码时，列为“未填商家编码（待核对）”，并保留来源行和订单号。已知 SKU 合计与待核对实物分列，不能直接丢弃造成漏算。</p>
-<h2>输出五个 sheet</h2>
-<table>
-<thead>
-<tr>
-<th>Sheet</th>
-<th>内容</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>全量订单</td>
-<td>全部记录，统一后的编码，用于追溯</td>
-</tr>
-<tr>
-<td>真实订单</td>
-<td>排除补单后的完整记录；包含退货记录</td>
-</tr>
-<tr>
-<td>补单订单</td>
-<td>匹配的完整订单记录</td>
-</tr>
-<tr>
-<td>退货订单</td>
-<td>真实订单中符合退货条件的完整实物记录副本</td>
-</tr>
-<tr>
-<td>统计</td>
-<td>按商家编码汇总出库销量、退货量、净销量、合计及口径说明</td>
-</tr>
-</tbody>
-</table>
-<p>退货订单是从真实订单复制的子集，<strong>不能从真实订单移走</strong>，否则出库与退货统计会失真。没有退货时保留表头。保留订单号、原始状态、物流、数量等所有字段；额外核对字段确有需要时追加在末尾，不覆盖源字段。</p>
-<p>统计页主表保持简洁，数量为数值，订单号和 SKU 为文本。保留真实订单内实物 SKU 的零出库行。说明数据范围、物流判断、退货申请口径、非实物排除和跨月情况。业务口径尚有未决事项时，在结果旁明确标注暂定及影响数量，不把未知值表示为零。</p>
-<p>优先使用关联真实订单的可读公式；源购买数量若为文本，确保公式实际能累计数值文本。需要状态分类或退货件数确认时使用显式映射/确认值，不把人工判断隐藏在模糊公式中。</p>
-<p>公式与分拣表的更新能力不同：增删源记录、修改补单号或更改分类后，须重新分拣并刷新 SKU 列表与退货明细，不能宣称只靠统计公式就会自动更新全部工作表。若输出是静态快照，明确注明需重跑刷新。</p>
-<h2>校验和交付</h2>
-<p>保存前完成以下业务校验，而不仅是公式错误扫描：</p>
-<ol>
-<li>全量记录数 = 真实记录数 + 补单记录数；按源行身份核对互斥和覆盖，不依赖订单号唯一。</li>
-<li>分拣前后完整行多重集合一致；未重复、未漏行，非实物仍留在明细。</li>
-<li>退货订单是符合口径的真实订单子集，无补单、无未出库、无非实物。</li>
-<li>按同一 SKU 和确认退货件数，退货明细汇总 = 统计退货量；每个 SKU 净销量 = 出库量 - 退货量。</li>
-<li>用独立计算复算 SKU 与总计；缺码实物单列，不能漏出实物总数；数量按件数，不按行数。</li>
-<li>检查源行数据和原有格式、长订单号精度、编码替换及无关 sheet 保留情况。渲染检查新增表头、说明、数值和列宽；保存后重新打开验证。</li>
-</ol>
-<p>完成时给出文件、实际生成的 sheet、出库/退货/净销量、补单匹配与未匹配数量。集中列出未决问题及下一步需要的资料，引导用户用退货订单与仓库的退回签收、入库记录核对。没有仓库回传数据时不宣称账实一致。</p>
-<p>遇到异常时自动修正可确定的格式问题并告知；集中询问业务歧义；只暂停受影响部分，继续其他检查。不要反复询问已确认规则，也不要因等待期间没有回复就当作用户同意。</p>
-<p>维护或大幅修改此技能时，用 <a href="references/acceptance-cases.md">验收场景</a> 检查业务行为。</p><h2>使用示例</h2><p>复制下面任一场景的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 tmall-sales-to-warehouse-reconciliation 技能：」即可显式指定。</p>
+</blockquote></div></section><section class="skill" id="skill-tmall-sales-to-warehouse-reconciliation"><div class="skill-head"><img src="icons/tmall-sales-to-warehouse-reconciliation.svg" alt="天猫销售仓库对账"><div><div class="zh">天猫销售仓库对账</div><div class="en">tmall-sales-to-warehouse-reconciliation</div></div><span class="skill-cat">电商 · 经营报表</span></div><p class="skill-desc">清洗天猫订单商家编码、按指定订单号分离补单，以物流信息和退款状态统计真实订单的 SKU 出库、退货和净销量，生成全量订单、真实订单、补单订单、退货订单、统计五个工作表，供仓库进销存对账。适用于天猫订单 Excel 整理、补单剔除和仓库销量退货核对。</p><h2>使用示例</h2><p>复制下面任一场景的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 tmall-sales-to-warehouse-reconciliation 技能：」即可显式指定。</p>
 <h2>场景 1｜订单清洗 + 剔除补单（最常用）</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
 <p>这是平台导出的订单明细 Excel：&lt;文件路径&gt;。请做订单清洗和仓库对账，剔除补单后统计各 SKU 的出库、退货和净销量，输出对账工作簿。补单订单号如下：</p>
@@ -543,311 +210,19 @@ footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 6
 <h2>场景 3｜先确认口径再动手（首次使用）</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
 <p>我要用这份订单表做仓库月度对账：&lt;文件路径&gt;。请先检查表结构并说明你打算怎么处理，等我确认并给你补单号之后再开始。</p>
-</blockquote></div></section><section class="skill" id="skill-tmall-monthly-business-report"><div class="skill-head"><img src="icons/tmall-monthly-business-report.svg" alt="天猫月度经营报表"><div><div class="zh">天猫月度经营报表</div><div class="en">tmall-monthly-business-report</div></div><span class="skill-cat">电商 · 经营报表</span></div><h1>天猫店铺月度经营报告</h1>
-<p>将平台导出的当月订单明细、做单单号、推广费明细与价格清单，加工为一份多 sheet 的经营报告 Excel，所有计算字段必须是 Excel 公式（打开文件即可追溯计算逻辑），而非写死的数值。</p>
-<p>使用当前环境可用的表格读取、编辑、公式写入与渲染能力；已有表格处理规范时遵守其工具与格式要求。不要假设操作系统、客户端、文件位置或月份。</p>
-<h2>开始时引导用户</h2>
-<p>每次任务需要以下输入，缺失信息尽早集中询问，避免逐条盘问；已提供或已确认的信息不重复问：</p>
-<table>
-<thead>
-<tr>
-<th>输入</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>销售明细</td>
-<td>平台导出的订单明细 xlsx，含子订单编号、主订单编号、商家编码、购买数量、买家实付金额、退款状态等列</td>
-</tr>
-<tr>
-<td>做单单号</td>
-<td>补单订单号 txt，每行一个；未提供时须询问，不能默认无补单</td>
-</tr>
-<tr>
-<td>推广费</td>
-<td>推广平台导出的每日明细 csv（通常 GBK 编码）</td>
-</tr>
-<tr>
-<td>价格清单</td>
-<td>含「商家编码」「预估成本」列的 xlsx</td>
-</tr>
-<tr>
-<td>平台费用清单</td>
-<td>当月各费用项目与金额，<strong>每月必须由用户提供</strong>，含负数退款项</td>
-</tr>
-</tbody>
-</table>
-<h2>订单拆分（4 个明细 sheet）</h2>
-<ol>
-<li><strong>订单-全量</strong>：原始数据，不做任何修改。</li>
-<li><strong>订单-补单</strong>：订单号（同时匹配「子订单编号」和「主订单编号」，任一命中）出现在做单单号中的记录。</li>
-<li><strong>订单-退款</strong>：在剩余记录中，「退款状态」≠「没有申请退款」的记录（含退款关闭、退货待确认收货等一切非无退款状态）。</li>
-<li><strong>订单-有效</strong>：其余记录。<strong>销售统计只基于本 sheet</strong>。</li>
-</ol>
-<p>校验：全量 = 补单 + 退款 + 有效，按行数核对互斥与覆盖。txt 中的做单号可能多于明细中匹配到的记录（跨月/未导出）：<strong>补单费按实际匹配到的记录数计</strong>，未匹配单号不计费，但要在财报备注中说明数量。</p>
-<h2>数据检查与标准化</h2>
-<p>导出的「商家编码」可能与价格清单不一致。<strong>任何无法对应的编码都必须先询问用户，不得自行猜测或丢弃</strong>；其他未提及的数据质量问题（空编码、数量异常等）同样先确认。订单号全程按精确文本处理，不转浮点数。</p>
-<h3>已确认的店铺口径（用户已确认，遇相同情况直接沿用）</h3>
-<p>编码映射：</p>
-<table>
-<thead>
-<tr>
-<th>订单中的编码</th>
-<th>价格清单编码</th>
-<th>预估成本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>04A</td>
-<td>亚都04A机械款</td>
-<td>65</td>
-</tr>
-<tr>
-<td>亚都130DWIFI款-金色</td>
-<td>130DWiFi智能款金色</td>
-<td>193.5</td>
-</tr>
-<tr>
-<td>亚都130D智能款-金色</td>
-<td>130D智能款金色</td>
-<td>179</td>
-</tr>
-<tr>
-<td>天猫套餐B组合装</td>
-<td>（清单无，用户指定）</td>
-<td>243.2 / 件</td>
-</tr>
-</tbody>
-</table>
-<p>无编码行的处理：</p>
-<table>
-<thead>
-<tr>
-<th>行内容</th>
-<th>处理</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>运费/补差/非实物</td>
-<td>以「运费/补差」为编码计入营业额，成本为 0</td>
-</tr>
-<tr>
-<td>遥控器（配件）</td>
-<td>从销售统计中剔除（仍保留在订单明细 sheet 中）</td>
-</tr>
-<tr>
-<td>商品属性「13L 活水除菌白色」</td>
-<td>归入 亚都130C智能款-白色</td>
-</tr>
-<tr>
-<td>商品属性「5L 活水除菌【声控】黑色」</td>
-<td>归入 亚都无雾50C语音控制版</td>
-</tr>
-</tbody>
-</table>
-<p>遇到上表之外的新情况，仍需询问用户。</p>
-<h2>销售统计 sheet</h2>
-<p>按映射后的商家编码分组汇总，只统计订单-有效：</p>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>口径 / 公式</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>商家编码</td>
-<td>映射后的编码</td>
-</tr>
-<tr>
-<td>售出数量</td>
-<td>Σ 购买数量</td>
-</tr>
-<tr>
-<td>营业额</td>
-<td>Σ 买家实付金额</td>
-</tr>
-<tr>
-<td>销售均价</td>
-<td><code>=营业额/售出数量</code></td>
-</tr>
-<tr>
-<td>预估成本</td>
-<td>价格清单中的单位预估成本</td>
-</tr>
-<tr>
-<td>平均利润</td>
-<td><code>=总利润/售出数量</code></td>
-</tr>
-<tr>
-<td>毛利率</td>
-<td><code>=总利润/营业额</code></td>
-</tr>
-<tr>
-<td>总利润</td>
-<td><code>=营业额−预估成本×售出数量</code></td>
-</tr>
-</tbody>
-</table>
-<p>明细行按营业额降序，全部用公式；表头下第一行为「合计」行：数量/营业额/总利润用 <code>SUM</code> 求和，均价/平均利润/毛利率由合计值再算。</p>
-<h2>平台费用 sheet</h2>
-<p>费用项目与金额来自用户当月提供的清单。按金额降序排列（负数项按数值参与排序与求和）；表头下第一行为合计行 <code>=SUM(B3:B{n})</code>。</p>
-<h2>推广费 sheet</h2>
-<p>读入 csv（GBK 编码），每日明细原样保留。表头下第一行为合计行：</p>
-<ul>
-<li><strong>可求和列</strong>（展现量、点击量、花费、各类成交金额/笔数、购物车数、收藏/加购数、咨询量等计数与金额列）：<code>=SUM(列3:列{n})</code>。</li>
-<li><strong>比率/均值列</strong>用合计值推导，均包 <code>IFERROR(...,"")</code> 防除零：</li>
-<li>点击率 <code>=点击量/展现量</code>；平均点击花费 <code>=花费/点击量</code>；千次展现花费 <code>=花费/展现量*1000</code></li>
-<li>点击转化率 <code>=总成交笔数/点击量</code>；投入产出比 <code>=总成交金额/花费</code>；含预售投产比 <code>=(总成交金额+总预售成交金额)/花费</code></li>
-<li>总成交成本 <code>=花费/总成交笔数</code>；加购成本 <code>=花费/总购物车数</code>；加购率 <code>=总购物车数/点击量</code></li>
-<li>各类收藏成本 <code>=花费/对应收藏数</code>；宝贝收藏率 <code>=收藏宝贝数/点击量</code></li>
-<li>引导访问率 <code>=引导访问量/点击量</code>；引导访问潜客占比 <code>=潜客数/访问人数</code>；入会率 <code>=入会量/访问人数</code></li>
-<li>成交新客占比 <code>=成交新客数/成交人数</code>；人均成交笔数 <code>=总成交笔数/成交人数</code>；人均成交金额 <code>=总成交金额/成交人数</code></li>
-<li>「平均访问页面数」无法从汇总推导，留空。</li>
-<li>比率列用百分比格式 <code>0.00%</code>，成本/均值列用两位小数。</li>
-</ul>
-<h2>补单费</h2>
-<p>13 元/单，按订单-补单 sheet 实际记录数计：<code>=COUNTA(A4:A{n})*13</code>，放在订单-补单 sheet 第 1 行（表头之上），旁注口径。</p>
-<h2>财报 sheet（财务模型）</h2>
-<pre><code>当月净利润 = 商品毛利 − 平台费用合计 − 推广费合计 − 补单费
-</code></pre>
-<p>各行公式（层层引用其他 sheet）：</p>
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th>公式</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>有效订单营业额</td>
-<td><code>='销售统计'!C2</code></td>
-</tr>
-<tr>
-<td>有效订单售出数量</td>
-<td><code>='销售统计'!B2</code></td>
-</tr>
-<tr>
-<td>预估成本合计</td>
-<td><code>=SUMPRODUCT('销售统计'!B3:B{n},'销售统计'!E3:E{n})</code></td>
-</tr>
-<tr>
-<td>商品毛利</td>
-<td><code>=营业额−成本合计</code></td>
-</tr>
-<tr>
-<td>商品毛利率</td>
-<td><code>=毛利/营业额</code></td>
-</tr>
-<tr>
-<td>平台费用合计</td>
-<td><code>='平台费用'!B2</code></td>
-</tr>
-<tr>
-<td>推广费合计</td>
-<td><code>='推广费'!F2</code></td>
-</tr>
-<tr>
-<td>补单费用</td>
-<td><code>='订单-补单'!B1</code></td>
-</tr>
-<tr>
-<td>费用合计</td>
-<td>三项相加</td>
-</tr>
-<tr>
-<td>当月净利润</td>
-<td><code>=毛利−费用合计</code></td>
-</tr>
-<tr>
-<td>净利率</td>
-<td><code>=净利润/营业额</code></td>
-</tr>
-</tbody>
-</table>
-<p>备注区必须写明：统计口径（剔除补单/退款各多少单）、未匹配做单号数量、剔除/映射的特殊行。</p>
-<h2>输出格式与样式</h2>
-<ul>
-<li>输出到当月目录，文件名 <code>驰梦 X 月经营报告.xlsx</code>（店铺与月份按实际替换）。</li>
-<li><strong>Sheet 顺序（左→右，概览在前、明细在后）</strong>：财报 → 销售统计 → 平台费用 → 推广费 → 订单-有效 → 订单-退款 → 订单-补单 → 订单-全量。</li>
-<li><strong>统计性内容放在表格数据上方</strong>：各 sheet 合计行在表头正下方；订单-补单的补单费在第 1 行。</li>
-<li>样式约定：</li>
-<li>表头：深蓝底（#305496）白字加粗、居中、行高 24、冻结窗格</li>
-<li>合计/统计行：浅黄底（#FFF2CC）加粗</li>
-<li>财报：章节标题浅蓝底（#D9E1F2）；净利润行浅黄底 + 红色加粗字体</li>
-<li>明细行细边框（#BFBFBF）；列宽按内容自适应（上限 45）</li>
-<li>比率列 <code>0.00%</code>，金额列 <code>#,##0.00</code></li>
-</ul>
-<h2>校验与交付</h2>
-<p>保存前完成：订单行数拆分守恒；每个 sheet 行数与预期一致；合计公式范围覆盖全部明细行；保存后重新打开验证公式与样式。交付时列出：输出文件、各 sheet 行数、营业额/毛利/三项费用/净利润，以及集中列出的未决问题（未匹配做单号、新出现待确认编码等）。</p>
-<h2>参考基准（2026 年 9 月，供对照流程是否走样）</h2>
-<p>订单拆分：全量 218 = 补单 31 + 退款 50 + 有效 137；营业额 45,205.58；成本 28,138.15；毛利 21,826.53（48.28%）；平台费用 3,448.91；推广费 18,505.81；补单费 403；净利润 −531.19（−1.18%）。</p><h2>使用示例</h2><p>复制下面任一场景的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 tmall-monthly-business-report 技能：」即可显式指定。</p>
+</blockquote></div></section><section class="skill" id="skill-tmall-monthly-business-report"><div class="skill-head"><img src="icons/tmall-monthly-business-report.svg" alt="天猫月度经营报表"><div><div class="zh">天猫月度经营报表</div><div class="en">tmall-monthly-business-report</div></div><span class="skill-cat">电商 · 经营报表</span></div><p class="skill-desc">生成天猫店铺月度经营报告 Excel：订单拆分为全量/补单/退款/有效四个明细表，按商家编码做销售统计（数量/营业额/均价/成本/利润/毛利率），汇总平台费用与推广费每日明细，按 13 元/单计补单费，最终按财务模型输出全公式化的财报。适用于天猫店铺每月对账、经营分析、利润核算场景。</p><h2>使用示例</h2><p>复制下面任一场景的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 tmall-monthly-business-report 技能：」即可显式指定。</p>
 <h2>场景 1｜生成当月经营报告（最常用）</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
-<p>这是 <X> 月的销售明细：&lt;销售明细.xlsx 路径&gt;；做单单号：&lt;做单单号.txt 路径&gt;；推广费：&lt;推广花费.csv 路径&gt;；各 sku 成本以 &lt;价格清单.xlsx 路径&gt; 中的「预估成本」为准。当月平台费用如下：&lt;费用项目与金额清单，逐行 项目：金额&gt;。请生成本月经营报告 Excel，输出到 &lt;输出目录&gt;。</p>
+<p>这是 &lt;X&gt; 月的销售明细：&lt;销售明细.xlsx 路径&gt;；做单单号：&lt;做单单号.txt 路径&gt;；推广费：&lt;推广花费.csv 路径&gt;；各 sku 成本以 &lt;价格清单.xlsx 路径&gt; 中的「预估成本」为准。当月平台费用如下：&lt;费用项目与金额清单，逐行 项目：金额&gt;。请生成本月经营报告 Excel，输出到 &lt;输出目录&gt;。</p>
 </blockquote></div>
 <h2>场景 2｜只核对数据、暂不生成报告</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
-<p>这是 <X> 月的销售明细：&lt;路径&gt; 和做单单号：&lt;路径&gt;。请先只做数据检查：做单单号能匹配多少条记录、有没有找不到成本对应的商家编码、有无其他数据质量问题，列出需要我确认的事项，先不要生成报告。</p>
+<p>这是 &lt;X&gt; 月的销售明细：&lt;路径&gt; 和做单单号：&lt;路径&gt;。请先只做数据检查：做单单号能匹配多少条记录、有没有找不到成本对应的商家编码、有无其他数据质量问题，列出需要我确认的事项，先不要生成报告。</p>
 </blockquote></div>
 <h2>场景 3｜补充提供平台费用后重出财报</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
-<p>沿用上次的 <X> 月处理结果，这是当月平台费用清单：&lt;费用清单&gt;。请把平台费用 sheet 和财报补全，重新输出报告。</p>
-</blockquote></div></section><section class="skill" id="skill-yuque-sheet"><div class="skill-head"><img src="icons/yuque-sheet.svg" alt="语雀表格解析"><div><div class="zh">语雀表格解析</div><div class="en">yuque-sheet</div></div><span class="skill-cat">语雀</span></div><h1>语雀表格解析与多用输出</h1>
-<h2>核心能力：提取结构化数据（所有下游的第一步）</h2>
-<ol>
-<li>浏览器打开文档（复用用户登录态）：<code>tabs_create_mcp</code> 建 tab → <code>navigate</code> 到 URL。</li>
-<li><code>javascript_tool</code> 执行 <code>scripts/extract.js</code> 全文（自读 window.appData 的 slug/book_id）。第一次调用返回 JSON 长度；第二次调用 <code>window.__extract</code> 取回全文，保存为工作目录 <code>data.json</code>。</li>
-<li>（下游 A/B 带图时需要）下载内嵌图片：从 data.json 提取去重 img src，<code>curl -sS -o &lt;basename&gt; -H "Referer: https://www.yuque.com/" -H "User-Agent: Mozilla/5.0 ..." &lt;url&gt;</code> 并行下载到 <code>imgs/</code>。</li>
-</ol>
-<h3>data.json schema</h3>
-<pre><code class="language-json">{
-  &quot;title&quot;: &quot;文档标题&quot;,
-  &quot;backColors&quot;: [&quot;rgba(236,253,245,1)&quot;, &quot;...&quot;],
-  &quot;cells&quot;: [[row, col, value, bgIndex], &quot;...&quot;],
-  &quot;merges&quot;: [[row, col, rowspan, colspan], &quot;...&quot;]
-}
-</code></pre>
-<ul>
-<li>value 形态：字符串 | 数字 | <code>{img: url}</code> | <code>{link: 显示文本}</code>；bgIndex=-1 表示无系列色带。</li>
-<li>backColors 下标即 bgIndex（语雀样式 <code>_bN</code> token 的 N）。</li>
-</ul>
-<h2>下游 A：打印高清图片</h2>
-<ol>
-<li><code>python3 scripts/gen_html.py data.json imgs out</code>
-   - 生成 <code>page_full.html</code> + <code>page_p1..pN.html</code> + <code>widths.json</code>。
-   - 分页规则（用户明确要求）：按 row0 分类拆"系列色带"，同一系列不跨页，每页产品列 ≤9，保证 A4 横向可读；列数少的页自动加宽列宽、加大字号。</li>
-<li><code>python3 scripts/render.py out "&lt;标题&gt;"</code>
-   - 无头 Chrome <code>--force-device-scale-factor=2</code> 截图 + PIL 裁底边，输出 <code>&lt;标题&gt;-完整版.png</code> 与 <code>&lt;标题&gt;-打印版-第N页.png</code>。</li>
-<li>Read 逐张校验后复制到用户工作目录并 present_files。</li>
-</ol>
-<h2>下游 B：导出 Excel</h2>
-<p><code>python3 scripts/to_xlsx.py data.json out.xlsx [--with-images imgs]</code>
-- 写值（纯数字串转数值）、应用合并单元格、系列色带填充、表头行加粗、列宽行高；<code>--with-images</code> 在第 2 行嵌入产品图。
-- 依赖 openpyxl；本机未预装，缺则 <code>pip3 install openpyxl</code>。</p>
-<h2>下游 C：CSV / 数据分析</h2>
-<ul>
-<li><code>python3 scripts/to_csv.py data.json out.csv</code>：展开为二维表（合并区非锚点单元格留空；图片转 URL；链接转文本），Excel/pandas 可直接打开。</li>
-<li>或直接读 data.json 分析：<code>grid[(r,c)]</code> + merges 即可任意聚合对比；系列分组直接用 bgIndex。</li>
-</ul>
-<h2>Pitfalls</h2>
-<ul>
-<li>不要 WebFetch 抓语雀正文（只有壳）；不要注入 pako（CSP 拦截），必须用原生 <code>DecompressionStream('deflate')</code>。</li>
-<li>空对象 <code>{}</code> 的 cell.v 当空单元格。</li>
-<li>数字 &lt;1 且同行其它单元格含 '%' 时打印版按百分比格式化（0.65→65%）；行标签含"价"的纯数字加 ¥ 前缀。若与原表显示不符，直接改 data.json 后重跑下游。</li>
-<li>Chrome 截图 window 宽度必须等于 widths.json 的 page_w，高度留余量 1600；底边由 render.py 裁。</li>
-<li>打印版单页不要塞太多列（用户反馈过"挤、不方便 A4 打印"）：按系列拆页、每页 ≤9 产品列。</li>
-</ul>
-<h2>Verification</h2>
-<ul>
-<li>图片：Read 目视（色带齐全、图行完整、合并无错位、价格带 ¥）；PNG 宽 ≥3000px。</li>
-<li>Excel/CSV：用 openpyxl/pandas 读回，抽查行列数与几个单元格、合并区数量。</li>
-</ul><h2>使用示例</h2><p>复制下面任一场景的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 yuque-sheet 技能：」即可显式指定。解析依赖浏览器中已登录的语雀会话，请确认当前账号对目标文档有访问权限。</p>
+<p>沿用上次的 &lt;X&gt; 月处理结果，这是当月平台费用清单：&lt;费用清单&gt;。请把平台费用 sheet 和财报补全，重新输出报告。</p>
+</blockquote></div></section><section class="skill" id="skill-yuque-sheet"><div class="skill-head"><img src="icons/yuque-sheet.svg" alt="语雀表格解析"><div><div class="zh">语雀表格解析</div><div class="en">yuque-sheet</div></div><span class="skill-cat">语雀</span></div><p class="skill-desc">解析语雀表格文档（lakesheet）为结构化数据，并支持多种下游输出：打印高清图片、导出 Excel/CSV、数据分析。当用户给出 yuque.com 表格文档链接并要求解析/读取/导出/打印/转图片/转 Excel/分析/统计时使用。核心能力：浏览器登录态提取 → deflate 解压 → SpreadJS 解析。</p><h2>使用示例</h2><p>复制下面任一场景的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 yuque-sheet 技能：」即可显式指定。解析依赖浏览器中已登录的语雀会话，请确认当前账号对目标文档有访问权限。</p>
 <h2>场景 1｜语雀表格 → Excel（最常用）</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
 <p>请把这个语雀表格文档导出成 Excel：&lt;语雀链接&gt;。我的浏览器已登录语雀。</p>
@@ -855,146 +230,41 @@ footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 6
 <h2>场景 2｜语雀表格 → 打印用高清图片</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
 <p>请把这个语雀表格文档渲染成打印用的高清图片：&lt;语雀链接&gt;。我的浏览器已登录语雀。</p>
-</blockquote></div></section><section class="skill" id="skill-yuque-mcp"><div class="skill-head"><img src="icons/yuque-mcp.svg" alt="语雀 MCP 操作"><div><div class="zh">语雀 MCP 操作</div><div class="en">yuque-mcp</div></div><span class="skill-cat">语雀</span></div><h1>语雀 MCP 使用指南</h1>
-<h2>接入配置</h2>
-<p>MCP 服务器名称建议为 <code>yuque</code>，启动方式 <code>npx -y yuque-mcp</code>，环境变量 <code>YUQUE_TOKEN</code>。</p>
-<p>令牌获取与安全检查：</p>
-<ol>
-<li>令牌在语雀「账户设置 → 开发者设置 → API Token」（https://www.yuque.com/settings/tokens）创建。</li>
-<li>严禁把令牌明文写进技能文件、文档或对话产物。</li>
-<li>优先复用本机已有配置中的令牌（如 <code>~/.codex/config.toml</code>、<code>~/.claude/settings.json</code> 等编辑器 MCP 配置里的 yuque 段）；没有再向用户索取。</li>
-</ol>
-<p>若当前客户端未接入该 MCP，在客户端的 MCP 配置中添加（JSON 示例，TOML 类客户端照此换算）：</p>
-<pre><code class="language-json">{
-  &quot;mcpServers&quot;: {
-    &quot;yuque&quot;: {
-      &quot;command&quot;: &quot;npx&quot;,
-      &quot;args&quot;: [&quot;-y&quot;, &quot;yuque-mcp&quot;],
-      &quot;env&quot;: { &quot;YUQUE_TOKEN&quot;: &quot;&lt;token&gt;&quot; }
-    }
-  }
-}
-</code></pre>
-<p>接入后工具名以服务器名 <code>yuque</code> 为前缀（具体格式因客户端而异，如 <code>mcp__yuque__yuque_get_toc</code>）。</p>
-<p>安装参考：官方仓库 https://github.com/yuque/yuque-mcp-server （npm 包 <code>yuque-mcp</code>，stdio 传输）。除上面的手动配置外，也可用官方安装命令 <code>npx yuque-mcp install --token=&lt;token&gt; --client=&lt;客户端名&gt;</code> 一键写入客户端配置；私有部署或空间绑定令牌可加环境变量 <code>YUQUE_HOST</code>（或 <code>--host</code>）。</p>
-<h2>工具速览</h2>
-<ul>
-<li>用户/知识库：<code>yuque_get_user</code>、<code>yuque_list_books</code>、<code>yuque_get_book</code>、<code>yuque_create_book</code>、<code>yuque_update_book</code></li>
-<li>文档：<code>yuque_list_docs</code>、<code>yuque_get_doc</code>、<code>yuque_create_doc</code>、<code>yuque_update_doc</code></li>
-<li>目录：<code>yuque_get_toc</code>、<code>yuque_update_toc</code></li>
-<li>搜索：<code>yuque_search</code></li>
-<li>小记：<code>yuque_list_notes</code>、<code>yuque_get_note</code>、<code>yuque_create_note</code>、<code>yuque_update_note</code></li>
-<li>画板资源：<code>yuque_get_resource</code>、<code>yuque_create_resource</code>、<code>yuque_update_resource</code></li>
-</ul>
-<p>所有 <code>repo_id</code> 参数均可传 namespace 字符串（形如 <code>用户名/知识库slug</code>，可从 <code>yuque_list_books</code> 或 <code>yuque_search</code> 获取）。</p>
-<h2>标准工作流：建分组 + 存文档</h2>
-<ol>
-<li><code>yuque_get_toc</code> 取目录，找到父节点 <code>uuid</code>。</li>
-<li>建分组（TITLE 节点）：</li>
-</ol>
-<p><code>json
-   {"action":"appendNode","action_mode":"child","target_uuid":"&lt;父节点uuid，根级用空串&gt;","type":"TITLE","title":"&lt;分组名&gt;"}</code></p>
-<p>返回完整目录，从中读取新分组 <code>uuid</code>。
-3. <code>yuque_create_doc</code>（<code>repo_id</code>、<code>title</code>、<code>body</code>、<code>format:"markdown"</code>、<code>public:0|1</code>）创建文档。注意：新文档节点默认挂在目录<strong>根级</strong>。
-4. 在目录返回中找到该 doc 节点 <code>uuid</code>，移动进分组：</p>
-<p><code>json
-   {"action":"appendNode","action_mode":"child","target_uuid":"&lt;分组uuid&gt;","node_uuid":"&lt;doc节点uuid&gt;"}</code></p>
-<ol start="5">
-<li>文档链接格式：<code>https://www.yuque.com/&lt;namespace&gt;/&lt;slug&gt;</code>（slug 取自 create_doc 返回）。</li>
-</ol>
-<h2>坑位与注意</h2>
-<ul>
-<li><code>yuque_update_toc</code> 的 <code>toc_data</code> 是<strong>单操作 JSON 字符串</strong>，不是数组；一次调用只做一件事。</li>
-<li>直接用 <code>doc_ids</code> 新建 DOC 节点会落到根级，必须按第 4 步用 <code>node_uuid</code> 移动。</li>
-<li>限流：令牌级 429（Too Many Requests），多为其他会话/工具耗尽配额，重置窗口小时级。诊断：匿名请求返回 401 = 仅鉴权问题；带令牌 429 = 限流。处理：等待重置后重试，或换新令牌。</li>
-<li>操作语雀优先走 MCP，不要用浏览器自动化。</li>
-</ul><h2>使用示例</h2><p>复制下面任一场景的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 yuque-mcp 技能：」即可显式指定。令牌等敏感信息不要写进提示词，由 agent 从本机配置复用或单独向你索取。</p>
+</blockquote></div></section><section class="skill" id="skill-yuque-mcp"><div class="skill-head"><img src="icons/yuque-mcp.svg" alt="语雀 MCP 操作"><div><div class="zh">语雀 MCP 操作</div><div class="en">yuque-mcp</div></div><span class="skill-cat">语雀</span></div><p class="skill-desc">通过 yuque MCP 服务器操作语雀（知识库、目录分组、文档、小记、搜索）。当用户提到语雀、在语雀创建分组/文档、整理知识库目录、读取或搜索语雀内容时使用。包含 MCP 接入配置、目录（TOC）操作标准流程与 429 限流处理办法。优先使用本技能而非浏览器自动化操作语雀。</p><h2>使用示例</h2><p>复制下面任一场景的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 yuque-mcp 技能：」即可显式指定。令牌等敏感信息不要写进提示词，由 agent 从本机配置复用或单独向你索取。</p>
 <h2>场景 1｜接入语雀 MCP</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
 <p>请帮我在当前客户端接入语雀 MCP，接入后验证连通性并列出我的知识库。</p>
 </blockquote></div>
 <h2>场景 2｜存文档到知识库（最常用）</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
-<p>请把以下内容存进我的语雀知识库 <namespace，如 用户名/知识库slug> 的「&lt;分组名&gt;」分组下，文档标题「&lt;标题&gt;」，完成后把链接给我：</p>
+<p>请把以下内容存进我的语雀知识库 &lt;namespace，如 用户名/知识库slug&gt; 的「&lt;分组名&gt;」分组下，文档标题「&lt;标题&gt;」，完成后把链接给我：</p>
 <p>&lt;粘贴内容，或本地文件路径&gt;</p>
 </blockquote></div>
 <h2>场景 3｜搜索与阅读</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
 <p>请在我的语雀里搜索「&lt;关键词&gt;」，挑出最相关的一篇读出正文，帮我总结要点并附原文链接。</p>
-</blockquote></div></section><section class="skill" id="skill-invoice-organizer"><div class="skill-head"><img src="icons/invoice-organizer.svg" alt="发票整理"><div><div class="zh">发票整理</div><div class="en">invoice-organizer</div></div><span class="skill-cat">办公工具</span></div><h1>发票整理</h1>
-<p>用户提供发票目录时，整理其中的发票，并在最终对话中展示统计结果。不要创建或更新统计文件。仅处理用户指定目录及其子目录中的相关发票；不要将发票内容上传到外部服务。</p>
-<h2>识别与分类</h2>
-<ul>
-<li>从发票内容识别费用用途、含税总金额和销售方名称。“类型”指用途类别，例如打车、代驾、餐饮、机票、加油，不是发票的法定票种。</li>
-<li>金额采用价税合计或含税总额，不得用不含税金额、单价、发票代码或发票号码代替。</li>
-<li>根据发票项目名称、商品或服务明细判断用途。不能仅凭销售方名称猜测用途。用途、金额或销售方无法可靠识别时，不要猜测；保留原文件，并在对话统计中列出文件名和原因。</li>
-<li>公司简称优先使用销售方可识别的核心品牌。去掉组织形式、地区分支、销售公司字样、分公司和门店等非品牌部分，但保留品牌本身有辨识度的词。例如：</li>
-<li>“中国石化销售股份有限公司广东中山石油分公司”简写为“中国石化”；</li>
-<li>“中国石化销售股份有限公司广东深圳石油分公司”简写为“中国石化”；</li>
-<li>“广东广安冠德石化有限公司深圳上南加油站”简写为“冠德石化”。</li>
-<li>不要把不同品牌简写成同一名称；无法可靠判断核心品牌时，保留原文件并标记待确认。</li>
-<li>已识别文件命名为“用途类型-¥金额-公司简写.原扩展名”，金额保留两位小数，例如“餐饮-¥128.00-示例品牌.pdf”。保留原扩展名，清理文件系统不允许的字符。</li>
-<li>不得覆盖已有文件。同名时优先追加发票号码等稳定区分信息；无法取得时追加短序号。</li>
-</ul>
-<h2>去重</h2>
-<ul>
-<li>优先计算文件内容哈希，找出完全相同的副本。</li>
-<li>对不同扫描件或格式的文件，核对发票代码和号码；没有可靠唯一编号时，综合比较销售方、开票日期、含税总额和明细。</li>
-<li>只有能可靠确认属于同一张发票时才删除重复件。保留清晰、完整的一份；仅金额或销售方相同不足以证明重复。</li>
-<li>无法确认的疑似重复项一律保留，并在对话中列出供复核。</li>
-<li>尽量在重命名前完成去重。不要将目录中已有的统计文件或无关文件当成发票。</li>
-</ul>
-<h2>对话统计与结果</h2>
-<p>不要在发票目录中创建或更新统计文件。最终直接在对话中按用途类型展示保留且成功识别的发票数量和金额，并给出全量合计。金额使用“¥”并保留两位小数。例如：</p>
-<p>餐饮：3 张，¥456.00
-打车：2 张，¥78.50
-合计：5 张，¥534.50</p>
-<p>统计不包含已确认删除的重复件。说明统计口径仅覆盖去重后保留且成功识别的发票；另列待确认文件及原因，以及因重复关系不确定而保留的候选项。使用十进制定点数汇总金额，避免浮点误差。完成后在对话中报告重命名数量、确认并删除的重复件数量、待确认数量。只报告实际完成的操作。</p><h2>使用示例</h2><p>以下示例用于触发 invoice-organizer 技能。将占位符替换为实际目录或情况。</p>
+</blockquote></div></section><section class="skill" id="skill-invoice-organizer"><div class="skill-head"><img src="icons/invoice-organizer.svg" alt="发票整理"><div><div class="zh">发票整理</div><div class="en">invoice-organizer</div></div><span class="skill-cat">办公工具</span></div><p class="skill-desc">整理指定目录中的发票，按费用用途、含税金额和销售方核心品牌重命名，删除确认重复项，并在对话中汇报数量与金额。适用于周期性发票归档和财务报销整理。</p><h2>使用示例</h2><p>以下示例用于触发 invoice-organizer 技能。将占位符替换为实际目录或情况。</p>
 <p>使用 invoice-organizer 技能：整理目录 &lt;发票目录路径&gt; 中的发票，准备好发给财务。</p>
 <p>使用 invoice-organizer 技能：处理 &lt;发票目录路径&gt;，按餐饮、打车、机票等费用用途整理。</p>
-<p>使用 invoice-organizer 技能：整理 &lt;发票目录路径&gt;，完成后告诉我重复发票删除数量和需要确认的文件。</p></section><section class="skill" id="skill-picture-slicer"><div class="skill-head"><img src="icons/picture-slicer.svg" alt="图片切割器"><div><div class="zh">图片切割器</div><div class="en">picture-slicer</div></div><span class="skill-cat">办公工具</span></div><h1>图片切割器：按参考线或等分切分长图</h1>
-<h2>输入与原理</h2>
-<ul>
-<li><strong>参考线来源</strong>：PSD/PSB 文件。参考线保存在文件的图像资源块（资源 ID 1032），脚本直接二进制解析，不需要 Photoshop。</li>
-<li><strong>像素来源</strong>：扁平长图（PNG/JPG）。Pillow 打不开 PSB，psd-tools 对超过 30000 像素的合成图会直接拒绝，所以像素必须用用户在 PS 里导出的整张长图。</li>
-<li>因此默认要两个文件：PSD/PSB + 导出长图。若画布 ≤30000 像素且只给了 PSD/PSB，脚本会自动尝试用 psd-tools 读合成图（需已安装 psd-tools）。</li>
-</ul>
-<h2>工作流</h2>
-<ol>
-<li>确认输入路径：PSD/PSB（参考线）与长图（像素）；缺长图且画布超 3 万像素时，请用户在 PS 里导出一张整图。记录用户提供的长图原始绝对路径，并先确定最终输出目录：<code>&lt;原始长图所在目录&gt;/&lt;原始长图名（不含扩展名）&gt;/</code>。</li>
-<li>运行切片脚本（仅依赖 Pillow）：</li>
-</ol>
-<pre><code class="language-bash">python3 scripts/slice_by_guides.py --psd &lt;PSD/PSB路径&gt; --image &lt;长图路径&gt; --out &lt;输出目录&gt;
-</code></pre>
-<p>可选参数：<code>--format jpg --quality 90</code>（JPG 时透明底合成白底）；<code>--axis h|v|auto</code>（默认 auto，按有参考线的方向切）；<code>--slice-height N</code>（文件里没有参考线时的等分兜底）。</p>
-<ol start="3">
-<li>脚本内置校验：每个分片重新解码、尺寸核对、高度（宽度）合计等于原图、无重叠无遗漏；失败以非零退出。校验不通过不得向用户报告成功。</li>
-<li>抽查 1–2 张分片目视确认边界落在版面自然分界处（用 Read 看图）。</li>
-<li>若运行环境要求把输入复制到工作区，工作副本只用于读取和临时切片。切片校验通过后，必须把分片复制到第 1 步确定的最终输出目录，并在该目录核对数量、命名和尺寸；不得把工作副本所在目录当作“原图所在目录”。</li>
-<li>交付最终输出目录。压缩包只能作为额外交付物，不能替代默认目录中的分片。</li>
-</ol>
-<h2>输出约定</h2>
-<ul>
-<li><strong>“原图”专指用户最初提供的长图路径，不是工作区副本、临时文件或压缩包内路径。</strong></li>
-<li>默认最终输出目录固定为 <code>&lt;用户原始长图所在目录&gt;/&lt;用户原始长图名（不含扩展名）&gt;/</code>；只有用户明确指定其他输出位置时才可更改。脚本在工作副本上运行时，也必须按上述规则把结果复制回最终目录。</li>
-<li>分片命名：<code>01.png</code>、<code>02.png</code>… 两位补零，从 01 开始，不带原图名；选择 JPG 输出时扩展名相应为 <code>.jpg</code>。</li>
-<li>保留原图透明通道（PNG）；转 JPG 时透明区合成白底。</li>
-</ul>
-<h2>常见问题</h2>
-<ul>
-<li><strong>解析到 0 条参考线</strong>：文件可能没存参考线。让用户在 PS 里确认，或改用 <code>--slice-height N</code> 等分。</li>
-<li><strong>长图与 PSD 尺寸不一致</strong>（如导出时缩放过）：脚本按两轴比例自动缩放参考线坐标并打印提示。</li>
-<li><strong>平台只收 JPG / 限制单张大小</strong>：用 <code>--format jpg --quality N</code> 重切一版。</li>
-</ul><h2>使用示例</h2><p>复制下面任一场景的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 picture-slicer 技能：」即可显式指定。</p>
-<h2>场景 1｜按 PSD 参考线切片（最常用）</h2>
+<p>使用 invoice-organizer 技能：整理 &lt;发票目录路径&gt;，完成后告诉我重复发票删除数量和需要确认的文件。</p></section><section class="skill" id="skill-picture-slicer"><div class="skill-head"><img src="icons/picture-slicer.svg" alt="图片切割器"><div><div class="zh">图片切割器</div><div class="en">picture-slicer</div></div><span class="skill-cat">办公工具</span></div><p class="skill-desc">图片切割器：把超长图片（如电商详情长图）裁成编号分片。优先按 PSD/PSB 参考线切分，也支持指定高度、指定张数、自定义切分要求，以及无依据时按高宽比严格小于 2 自动近等高切分。切分后自动校验完整性，可输出 PNG/JPG。当用户提到切图/图片分割、详情图切片、按参考线导出切片、长图太长无法一次导出时使用。</p><h2>使用示例</h2><p>复制下面任一场景的提示词发给 agent，替换 <code>&lt;尖括号&gt;</code> 占位符即可使用。如果 agent 没有自动调用本技能，在提示词开头加上「使用 picture-slicer 技能：」即可显式指定。</p>
+<h2>场景 1｜按 PSD 参考线切片（最高优先级）</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
-<p>请按 PSD 参考线切分这张详情长图：PSD 文件 <PSD/PSB路径>，配套导出长图 &lt;长图路径&gt;。</p>
+<p>请按 PSD 参考线切分这张详情长图：PSD 文件 &lt;PSD/PSB路径&gt;，配套导出长图 &lt;长图路径&gt;。</p>
 </blockquote></div>
-<h2>场景 2｜无参考线 → 按固定高度等分</h2>
+<h2>场景 2｜按固定高度或指定张数切片</h2>
 <div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
-<p>这份详情长图 &lt;长图路径&gt; 的源文件里没有参考线，请按每张 &lt;高度，如 1500&gt; 像素等分切片。</p>
+<p>请把长图 &lt;长图路径&gt; 按每张 &lt;高度，如 1500&gt; 像素切片。</p>
+<p>请把长图 &lt;长图路径&gt; 近等高地切成 &lt;张数&gt; 张。</p>
+</blockquote></div>
+<h2>场景 3｜明确忽略参考线</h2>
+<div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
+<p>请忽略 &lt;PSD/PSB路径&gt; 中的参考线，把 &lt;长图路径&gt; 切成 &lt;张数&gt; 张。</p>
+</blockquote></div>
+<h2>场景 4｜完全无依据，自动近等高切片</h2>
+<div class="prompt"><button class="copy-btn" type="button">复制</button><blockquote>
+<p>请切分长图 &lt;长图路径&gt;，不使用参考线；我没有其他切分参数，按技能默认规则执行。</p>
 </blockquote></div></section>
-    <footer>由 scripts/build_docs.py 自动生成 · 数据来源为各技能目录的 SKILL.md 与 EXAMPLES.md</footer>
+    <footer>skill-hub 技能使用手册 · 持续更新</footer>
   </div>
 </div>
 <script>

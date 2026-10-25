@@ -68,19 +68,34 @@ def add_copy_buttons(html_text):
     )
 
 
+def escape_angle_brackets(text):
+    """转义行内代码之外的 <，避免 <占位符> 被当成 HTML 标签吞掉。
+
+    > 不转义：单独出现的 > 是合法文本，且 blockquote 语法依赖行首 >。
+    """
+    parts = re.split(r"(`[^`]*`)", text)
+    return "".join(
+        p if p.startswith("`") else p.replace("<", "&lt;") for p in parts
+    )
+
+
 def load_skills():
     skills = []
     for category, entries in CATEGORIES.items():
         for name, zh_name in entries:
             skill_dir = ROOT / name
-            fm, skill_body = parse_frontmatter(
+            fm, _ = parse_frontmatter(
                 (skill_dir / "SKILL.md").read_text(encoding="utf-8")
             )
             examples_html = ""
             examples_path = skill_dir / "EXAMPLES.md"
             if examples_path.exists():
                 examples_html = add_copy_buttons(
-                    render_md(strip_h1(examples_path.read_text(encoding="utf-8")))
+                    render_md(
+                        escape_angle_brackets(
+                            strip_h1(examples_path.read_text(encoding="utf-8"))
+                        )
+                    )
                 )
             icon_src = skill_dir / "icon.svg"
             if icon_src.exists():
@@ -92,7 +107,6 @@ def load_skills():
                     "zh_name": zh_name,
                     "category": category,
                     "description": fm.get("description", ""),
-                    "skill_html": render_md(strip_h1(skill_body)),
                     "examples_html": examples_html,
                 }
             )
@@ -186,6 +200,8 @@ a { color: var(--accent); text-decoration: none; }
 .skill-head .en { font-size: 13px; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 .skill-cat { font-size: 12px; color: var(--muted); margin-left: auto; flex: none;
   border: 1px solid var(--border); border-radius: 999px; padding: 2px 12px; }
+.skill-desc { font-size: 15px; color: var(--text); background: var(--bg);
+  border-radius: 10px; padding: 14px 16px; margin: 18px 0 4px; }
 
 /* Markdown 内容 */
 .skill h1, .skill h2 { font-size: 18px; margin: 26px 0 10px; }
@@ -307,7 +323,7 @@ def build_html(skills):
                 f'<div><div class="zh">{s["zh_name"]}</div>'
                 f'<div class="en">{s["name"]}</div></div>'
                 f'<span class="skill-cat">{s["category"]}</span></div>'
-                + s["skill_html"]
+                f'<p class="skill-desc">{s["description"]}</p>'
                 + examples_block
                 + "</section>"
             )
@@ -331,7 +347,7 @@ def build_html(skills):
   <div class="content">
     <header class="hero">
       <h1>skill-hub 技能使用手册</h1>
-      <p>通用 Agent 技能仓库：客户端无关，任意支持技能 / MCP 的 agent 客户端均可使用。每个技能一个文件夹，内含 SKILL.md 与配套脚本。</p>
+      <p>每个技能解决一类具体问题。浏览下方卡片找到需要的技能，进入详情后复制示例提示词发给 agent，替换提示词中的占位符即可开始使用。</p>
       <div class="badges">
         <span class="badge">{total} 个技能</span>
         <span class="badge">{len(cats)} 个分类</span>
@@ -340,7 +356,7 @@ def build_html(skills):
     </header>
     {''.join(cards)}
     {''.join(sections)}
-    <footer>由 scripts/build_docs.py 自动生成 · 数据来源为各技能目录的 SKILL.md 与 EXAMPLES.md</footer>
+    <footer>skill-hub 技能使用手册 · 持续更新</footer>
   </div>
 </div>
 <script>{JS}</script>
