@@ -12,13 +12,13 @@ examples:
 
         PSD/PSB 文件：{{PSD/PSB 路径}}
         长图文件：{{长图 PNG/JPG 路径}}
-        输出目录：{{可选，默认为长图同目录下的 切片/}}
+        输出目录：{{可选，默认为原始长图同目录下的同名文件夹}}
       en: |-
         Please slice the long detail image at the guides:
 
         PSD/PSB file: {{path to PSD/PSB}}
         Long image: {{path to flat PNG/JPG}}
-        Output dir: {{optional, defaults to a "slices" folder next to the long image}}
+        Output dir: {{optional, defaults to an image-named folder next to the original image}}
   - id: slice-psd-only
     title:
       zh: 只给 PSD 直接切片
@@ -37,17 +37,33 @@ examples:
         PSD/PSB file: {{path to PSD/PSB}}
   - id: slice-equal-height
     title:
-      zh: 无参考线时按固定高度等分
-      en: Equal-height fallback without guides
+      zh: 按固定高度或张数切片
+      en: Slice by fixed height or count
     description:
-      zh: 文件里没有参考线（或只有扁平长图）时按固定高度等分切图
-      en: When the file has no guides (or only a flat long image exists), cut at a fixed slice height
+      zh: 不采用参考线时，按固定高度或指定张数切图
+      en: When guides are not used, cut at a fixed height or into a specified number of slices
     prompt:
       zh: |-
-        这张长图没有参考线，请按每片 {{高度，如 1500}} 像素等分切片：
+        请把长图按每片 {{高度，如 1500}} 像素切片，或改成明确指定张数：
 
         长图文件：{{长图 PNG/JPG 路径}}
       en: |-
-        This long image has no guides; slice it every {{height, e.g. 1500}} px:
+        Slice this long image every {{height, e.g. 1500}} px, or specify a slice count instead:
+
+        Long image: {{path to flat PNG/JPG}}
+  - id: slice-default-ratio
+    title:
+      zh: 无依据时自动近等高切片
+      en: Automatic near-even slices with a strict aspect ratio
+    description:
+      zh: 明确忽略参考线或没有任何切分依据时，自动按高宽比严格小于 2 近等高切分
+      en: With guides ignored or no slicing criteria, automatically make near-even slices whose height/width is strictly below 2
+    prompt:
+      zh: |-
+        请切分这张长图，不使用参考线；我没有其他切分参数，按默认规则执行：
+
+        长图文件：{{长图 PNG/JPG 路径}}
+      en: |-
+        Slice this long image without guides. I have no other criteria; use the default rule:
 
         Long image: {{path to flat PNG/JPG}}

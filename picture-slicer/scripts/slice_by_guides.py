@@ -1,21 +1,28 @@
 #!/usr/bin/env python3
-"""Slice a long e-commerce detail image at guide positions stored in a PSD/PSB.
+"""Slice a long e-commerce detail image using guides or explicit parameters.
 
 Guide coordinates are parsed straight from the PSD/PSB image-resources block
-(resource id 1032, "grid and guides"), so this works regardless of Photoshop's
-30000px canvas limit. Pixels are taken from a flat exported image (PNG/JPG),
-because Pillow cannot open PSB and psd-tools refuses merged images taller than
-30000px. If no flat image is supplied and the canvas is within 30000px, the
-script falls back to reading the merged image via psd-tools (optional dep).
+(resource id 1032), so Photoshop's 30000px canvas limit does not apply. Pixels
+come from a flat exported PNG/JPG, or from psd-tools when the canvas is small
+enough and no flat image is supplied.
+
+Without guides or explicit parameters, horizontal slices are as even as
+possible while every slice satisfies height / width < 2.
 
 Requires: Pillow. Optional: psd-tools (only for the no-flat-image fallback).
 """
 import argparse
 import os
 import struct
-import sys
 
 MAX_PSD_AXIS = 30000
+
+
+def positive_int(value):
+    number = int(value)
+    if number < 1:
+        raise argparse.ArgumentTypeError("must be a positive integer")
+    return number
 
 
 def parse_psd(path):
@@ -78,28 +85,62 @@ def load_pixels(image_path, psd_path, canvas):
     return PSDImage.open(psd_path).topil()
 
 
-def make_bounds(size, positions, slice_height):
+def even_bounds(size, count):
+    """Split into nearly equal integer lengths; put one remainder unit last."""
+    if count < 1 or count > size:
+        raise SystemExit("error: --count must be between 1 and the image axis length.")
+    base, remainder = divmod(size, count)
+    heights = [base] * count
+    for i in range(remainder):
+        heights[i] += 1
+    if remainder:
+        # Keep all lengths within 1px, with the last slice carrying one extra unit.
+        heights[remainder - 1] -= 1
+        heights[-1] += 1
+    bounds = [0]
+    for height in heights:
+        bounds.append(bounds[-1] + height)
+    return bounds
+
+
+def default_bounds(size, cross_size):
+    """Use the fewest nearly equal slices with size/cross_size strictly < 2."""
+    max_slice_size = 2 * cross_size - 1
+    count = (size + max_slice_size - 1) // max_slice_size
+    return even_bounds(size, count)
+
+
+def make_bounds(size, positions, slice_height=None, count=None, default_cross_size=None):
     if positions:
         bounds = [0] + sorted({max(0, min(size, round(p))) for p in positions}) + [size]
-    elif slice_height:
+    elif slice_height is not None:
         bounds = list(range(0, size, slice_height)) + [size]
+    elif count is not None:
+        return even_bounds(size, count)
+    elif default_cross_size is not None:
+        return default_bounds(size, default_cross_size)
     else:
         return None
-    # drop zero-height duplicates
+    # Drop zero-height duplicates at guide positions and at the image edge.
     return [b for i, b in enumerate(bounds) if i == 0 or b > bounds[i - 1]]
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--psd", help="PSD/PSB file containing the guides (omit when using --slice-height on a flat image)")
+    ap.add_argument("--psd", help="PSD/PSB file containing guides")
     ap.add_argument("--image", help="flat exported long image (PNG/JPG); omit only if canvas <= 30000px")
-    ap.add_argument("--out", help="output dir (default: <image dir>/切片)")
+    ap.add_argument("--out", help="output dir (default: <image dir>/<image name>)")
     ap.add_argument("--format", choices=["png", "jpg"], default="png")
     ap.add_argument("--quality", type=int, default=90, help="JPEG quality (default 90)")
     ap.add_argument("--axis", choices=["auto", "h", "v"], default="auto",
-                    help="h = cut at horizontal guides (rows), v = vertical guides (columns)")
-    ap.add_argument("--slice-height", type=int,
-                    help="fallback: equal-height slices when the file has no guides")
+                    help="h = rows, v = columns; default auto, falling back to h")
+    parameters = ap.add_mutually_exclusive_group()
+    parameters.add_argument("--slice-height", type=positive_int,
+                            help="fixed slice height when guides are not used")
+    parameters.add_argument("--count", type=positive_int,
+                            help="nearly equal slice count when guides are not used")
+    ap.add_argument("--ignore-guides", action="store_true",
+                    help="ignore PSD/PSB guides; use parameters or the default ratio rule")
     args = ap.parse_args()
 
     if args.psd:
@@ -108,38 +149,60 @@ def main():
         v_pos = sorted(p for p, d in guides if d == 0)
         print("canvas: %dx%d | horizontal guides: %d | vertical guides: %d"
               % (canvas[0], canvas[1], len(h_pos), len(v_pos)))
+        if args.ignore_guides:
+            print("note: ignoring PSD/PSB guides as requested")
+            h_pos = v_pos = []
     else:
-        canvas, guides = None, []
+        canvas = None
         h_pos = v_pos = []
 
     if args.axis == "auto":
-        axis = "h" if h_pos else ("v" if v_pos else None)
+        axis = "h" if h_pos else ("v" if v_pos else "h")
     else:
         axis = args.axis
-    if axis is None and not args.slice_height:
-        raise SystemExit("error: no guides found in %s. Re-check in Photoshop, or "
-                         "use --slice-height N for equal-height slicing." % args.psd)
-    if axis is not None and args.slice_height:
-        print("note: guides found; ignoring --slice-height")
+    has_guides = bool(h_pos or v_pos)
+    if has_guides and (args.slice_height is not None or args.count is not None):
+        print("note: guides take priority; ignoring --slice-height/--count")
 
     img = load_pixels(args.image, args.psd, canvas)
-    src_name = os.path.splitext(os.path.basename(args.image or args.psd))[0]
-    out_dir = args.out or os.path.join(os.path.dirname(os.path.abspath(args.image or args.psd)), "切片")
+    src_path = os.path.abspath(args.image or args.psd)
+    src_name = os.path.splitext(os.path.basename(src_path))[0]
+    out_dir = args.out or os.path.join(os.path.dirname(src_path), src_name)
     os.makedirs(out_dir, exist_ok=True)
 
     from PIL import Image
     w, h = img.size
     if axis == "v":
         psd_size, img_size, positions = (canvas[0] if canvas else w), w, v_pos
+        cross_size = h
     else:
         axis = "h"
         psd_size, img_size, positions = (canvas[1] if canvas else h), h, h_pos
-    scale = img_size / psd_size
-    if abs(scale - 1.0) > 1e-6:
-        print("note: image axis %d != psd axis %d, scaling guides by %.4f" % (img_size, psd_size, scale))
-        positions = [p * scale for p in positions]
+        cross_size = w
+    if positions:
+        scale = img_size / psd_size
+        if abs(scale - 1.0) > 1e-6:
+            print("note: image axis %d != psd axis %d, scaling guides by %.4f"
+                  % (img_size, psd_size, scale))
+            positions = [p * scale for p in positions]
 
-    bounds = make_bounds(img_size, positions, args.slice_height)
+    default_mode = (
+        not positions and axis == "h" and
+        args.slice_height is None and args.count is None
+    )
+    bounds = make_bounds(
+        img_size,
+        positions,
+        slice_height=args.slice_height,
+        count=args.count,
+        default_cross_size=cross_size if default_mode else None,
+    )
+    if bounds is None:
+        raise SystemExit("error: vertical custom slicing requires --slice-height or --count.")
+    if default_mode:
+        heights = [b - a for a, b in zip(bounds, bounds[1:])]
+        print("note: default near-even slicing; every height/width < 2; heights=%s" % heights)
+
     ext = args.format
     saved = []
     for i in range(len(bounds) - 1):
@@ -150,25 +213,28 @@ def main():
                 bg = Image.new("RGB", crop.size, (255, 255, 255))
                 bg.paste(crop, mask=crop.convert("RGBA").split()[3])
                 crop = bg
-            crop.save(os.path.join(out_dir, "%s_%02d.jpg" % (src_name, i + 1)), quality=args.quality)
+            crop.save(os.path.join(out_dir, "%02d.jpg" % (i + 1)), quality=args.quality)
         else:
-            crop.save(os.path.join(out_dir, "%s_%02d.png" % (src_name, i + 1)))
+            crop.save(os.path.join(out_dir, "%02d.png" % (i + 1)))
         saved.append((i + 1, a, b))
         print("slice %02d: %d..%d  (%dpx)" % (i + 1, a, b, b - a))
 
-    # ---- verify: every file decodes, dimensions consistent, no gap/overlap ----
+    # Verify decoding, dimensions, full coverage, and the default strict ratio.
     total = 0
     for i, a, b in saved:
-        p = os.path.join(out_dir, "%s_%02d.%s" % (src_name, i, ext))
+        p = os.path.join(out_dir, "%02d.%s" % (i, ext))
         with Image.open(p) as chk:
             chk.load()
             cw, ch = chk.size
         if (ch if axis == "h" else cw) != b - a or (cw if axis == "h" else ch) != (w if axis == "h" else h):
             raise SystemExit("VERIFY FAILED: %s dimensions %dx%d unexpected" % (p, cw, ch))
+        if default_mode and ch >= 2 * cw:
+            raise SystemExit("VERIFY FAILED: %s height/width must be strictly < 2" % p)
         total += b - a
     if total != img_size:
         raise SystemExit("VERIFY FAILED: slices cover %d of %d px" % (total, img_size))
-    print("OK: %d slices, %s coverage %d/%d px -> %s" % (len(saved), axis, total, img_size, out_dir))
+    print("OK: %d slices, %s coverage %d/%d px -> %s"
+          % (len(saved), axis, total, img_size, out_dir))
 
 
 if __name__ == "__main__":
