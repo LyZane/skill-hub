@@ -25,6 +25,7 @@
 
 - <img src="tmall-sales-to-warehouse-reconciliation/icon.svg" width="18"> **天猫销售仓库对账** `tmall-sales-to-warehouse-reconciliation` —— 清洗订单、分离补单，生成五个工作表核对仓库出库、退货与净销量。
 - <img src="tmall-monthly-business-report/icon.svg" width="18"> **天猫月度经营报表** `tmall-monthly-business-report` —— 生成月度经营报告 Excel：订单拆分、利润核算、平台费用汇总，全公式化输出。
+- <img src="tmall-logistics-analysis/icon.svg" width="18"> **天猫物流到货时长分析** `tmall-logistics-analysis` —— 核验考核口径，分析城市与线路贡献，模拟晚间揽收及临时剔除情景，输出公式化 Excel 报告。
 
 ### 语雀
 

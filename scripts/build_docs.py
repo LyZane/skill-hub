@@ -23,6 +23,7 @@ CATEGORIES = {
     "电商 · 经营报表": [
         ("tmall-sales-to-warehouse-reconciliation", "天猫销售仓库对账"),
         ("tmall-monthly-business-report", "天猫月度经营报表"),
+        ("tmall-logistics-analysis", "天猫物流到货时长分析"),
     ],
     "语雀": [
         ("yuque-sheet", "语雀表格解析"),
