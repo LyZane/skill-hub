@@ -16,6 +16,7 @@ ICONS_DIR = DOCS_DIR / "icons"
 
 CATEGORIES = {
     "电商 · 数据采集": [
+        ("tmall-data-encyclopedia", "天猫数据获取百科"),
         ("tmall-review-report", "天猫评价采集报告"),
         ("tmall-price-checker", "天猫价格核对"),
         ("jd-review-collector", "京东评论采集分析"),
