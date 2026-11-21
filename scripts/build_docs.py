@@ -33,6 +33,7 @@ CATEGORIES = {
     "办公工具": [
         ("invoice-organizer", "发票整理"),
         ("picture-slicer", "图片切割器"),
+        ("product-image-padding", "产品图片大小与留白统一"),
     ],
 }
 

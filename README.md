@@ -36,5 +36,6 @@
 
 - <img src="invoice-organizer/icon.svg" width="18"> **发票整理** `invoice-organizer` —— 按用途、金额和销售方品牌整理发票，删除确认重复项并汇报统计。
 - <img src="picture-slicer/icon.svg" width="18"> **图片切割器** `picture-slicer` —— 把超长图片裁成编号分片，支持按 PSD/PSB 参考线精确切分。
+- <img src="product-image-padding/icon.svg" width="18"> **产品图片大小与留白统一** `product-image-padding` —— 整图等比缩放统一双图视觉大小，保留边缘阴影，先预览确认再备份替换。
 
 各技能目录下的 `EXAMPLES.md` 提供典型场景的示例提示词，复制后替换占位符即可发给 agent 使用；在线手册中的示例支持一键复制。
